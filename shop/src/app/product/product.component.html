@@ -1,28 +1,27 @@
-<table>
-  <tr>
-    <td>Name</td>
-    <td>{{ name }}</td>
-  </tr>
-  <tr>
-      <td>Description</td>
-      <td>{{ description }}</td>
-  </tr>
-  <tr>
-      <td>Category</td>
-      <td>{{ category }}</td>
-  </tr>
-  <tr>
-      <td>Is available</td>
-      <td>{{ isAvailable }}</td>
-  </tr>
-  <tr>
-      <td>Suppliers</td>
-      <td><ul>
-        <li *ngFor="let supplier of suppliers">
-          {{ supplier }}
-          </li>
-        </ul>
-      </td>
-  </tr>
-</table>
+<div>
+  <div>
+    <span>Name </span>
+    <span>{{ product.name }}</span>
+  </div>
+  <div>
+    <span>Description </span>
+    <span>{{ product.description }}</span>
+  </div>
+  <div>
+    <span>Category </span>
+    <span>{{ product.category }}</span>
+  </div>
+  <div>
+    <span>Is available </span>
+    <span>{{ product.isAvailable }}</span>
+  </div>
+  <div>
+    <span>Suppliers:</span>
+    <ul>
+      <li *ngFor="let supplier of product.suppliers">
+        {{ supplier }}
+      </li>
+    </ul>
+  </div>
+</div>
 <button (click)="onBuy()">Buy</button>
