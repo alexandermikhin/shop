@@ -1,16 +1,15 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
-import { ProductModel } from "src/app/models/product.model";
-import { ProductsService } from "src/app/services/products.service";
-import { CartService } from "src/app/services/cart.service";
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { ProductModel } from 'src/app/models/product.model';
+import { ProductsService } from 'src/app/services/products.service';
+import { CartService } from 'src/app/services/cart.service';
 import { ActiveView } from 'src/app/models/active-view';
 
 @Component({
-  selector: "app-product-list",
-  templateUrl: "./product-list.component.html",
-  styleUrls: ["./product-list.component.css"]
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-
   @Output() viewChange = new EventEmitter<ActiveView>();
   products: ProductModel[];
   cartSum: number;
