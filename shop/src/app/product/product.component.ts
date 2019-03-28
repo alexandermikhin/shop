@@ -29,4 +29,8 @@ export class ProductComponent implements OnInit {
       'Supplier 3'
     ];
   }
+
+  onBuy() {
+    console.log('On buy was pressed.');
+  }
 }
