@@ -1,2 +1,10 @@
-<app-product-list></app-product-list>
-<app-cart></app-cart>
+<ng-container [ngSwitch]="activeView">
+  <app-product-list
+    *ngSwitchCase="ActiveView.productsList"
+    (viewChange)="setView($event)"
+  ></app-product-list>
+  <app-cart
+    *ngSwitchCase="ActiveView.cart"
+    (viewChange)="setView($event)"
+  ></app-cart>
+</ng-container>

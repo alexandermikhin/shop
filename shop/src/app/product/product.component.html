@@ -16,6 +16,10 @@
     <span>{{ product.isAvailable }}</span>
   </div>
   <div>
+    <span>Price: </span>
+    <span>{{ product.price }}</span>
+  </div>
+  <div>
     <span>Suppliers:</span>
     <ul>
       <li *ngFor="let supplier of product.suppliers">

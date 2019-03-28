@@ -32,6 +32,17 @@ export class ProductsService {
           'supplier-3',
           'supplier-1'
         ]
+      },
+      {
+        category: Category.category3,
+        description: 'product-3-description',
+        isAvailable: true,
+        name: 'product-3-name',
+        price: 300,
+        suppliers: [
+          'supplier-1',
+          'supplier-4'
+        ]
       }
     ];
   }

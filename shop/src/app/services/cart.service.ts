@@ -33,4 +33,8 @@ export class CartService {
       this.items.splice(cartItemIndex, 1);
     }
   }
+
+  getCartSum(): number {
+    return this.items.reduce((sum, item) => sum += item.price * item.quantity, 0);
+  }
 }

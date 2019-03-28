@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CartItem } from 'src/app/models/cart-item.model';
 import { CartService } from 'src/app/services/cart.service';
+import { ActiveView } from 'src/app/models/active-view';
 
 @Component({
   selector: 'app-cart',
@@ -8,7 +9,7 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-
+  @Output() viewChange = new EventEmitter<ActiveView>();
   items: CartItem[];
 
   constructor(private service: CartService) { }
@@ -27,4 +28,7 @@ export class CartComponent implements OnInit {
     this.items = this.service.getItems();
   }
 
+  changeView() {
+    this.viewChange.emit(ActiveView.productsList);
+  }
 }
