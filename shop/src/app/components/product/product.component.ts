@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ProductModel } from '../models/product.model';
+import { ProductModel } from 'src/app/models/product.model';
 
 @Component({
   selector: 'app-product',
@@ -8,6 +8,4 @@ import { ProductModel } from '../models/product.model';
 })
 export class ProductComponent {
   @Input() product: ProductModel;
-
-
 }
