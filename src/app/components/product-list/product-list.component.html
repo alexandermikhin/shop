@@ -1,0 +1,12 @@
+<h1>Products list</h1>
+<div *ngFor="let product of products">
+  <app-product [product]="product"></app-product>
+  <button *ngIf="product.isAvailable" (click)="onBuy(product)">Add to cart</button>
+  <hr/>
+</div>
+<div>
+  <span>Cart sum: </span><span>{{ cartSum }}</span>
+</div>
+<div>
+  <a href="javascript:void(0)" (click)="changeView()">Go to cart</a>
+</div>
