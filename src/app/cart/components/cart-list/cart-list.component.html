@@ -23,23 +23,11 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let item of items">
-        <td>
-          {{ item.name }}
-        </td>
-        <td>
-          {{ item.price }}
-        </td>
-        <td>
-          {{ item.quantity }}
-        </td>
-        <td>
-          {{ item.quantity * item.price }}
-        </td>
-        <td>
-          <button (click)="removeItem(item)">Remove</button>
-        </td>
-      </tr>
+      <app-cart-item
+        *ngFor="let item of items"
+        [item]="item"
+        (itemRemove)="removeItem($event)"
+      ></app-cart-item>
     </tbody>
   </table>
   <button (click)="emptyCart()">Empty cart</button>

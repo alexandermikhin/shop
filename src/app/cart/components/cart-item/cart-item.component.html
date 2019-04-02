@@ -1,0 +1,17 @@
+<tr>
+  <td>
+    {{ item.name }}
+  </td>
+  <td>
+    {{ item.price }}
+  </td>
+  <td>
+    {{ item.quantity }}
+  </td>
+  <td>
+    {{ item.quantity * item.price }}
+  </td>
+  <td>
+    <button (click)="removeItem(item)">Remove</button>
+  </td>
+</tr>
