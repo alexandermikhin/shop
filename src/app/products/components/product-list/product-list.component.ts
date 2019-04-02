@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ProductModel } from 'src/app/models/product.model';
-import { ProductsService } from 'src/app/services/products.service';
 import { CartService } from 'src/app/services/cart.service';
 import { ActiveView } from 'src/app/models/active-view';
+import { ProductModel } from '../../models/product.model';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   selector: 'app-product-list',
