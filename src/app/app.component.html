@@ -3,8 +3,8 @@
     *ngSwitchCase="ActiveView.productsList"
     (viewChange)="setView($event)"
   ></app-product-list>
-  <app-cart
+  <app-cart-list
     *ngSwitchCase="ActiveView.cart"
     (viewChange)="setView($event)"
-  ></app-cart>
+  ></app-cart-list>
 </ng-container>
