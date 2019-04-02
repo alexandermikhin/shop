@@ -11,24 +11,37 @@ import { CartService } from '../../services/cart.service';
 export class CartListComponent implements OnInit {
   @Output() viewChange = new EventEmitter<ActiveView>();
   items: CartItem[];
+  totalCount: number;
+  totalSum: number;
 
   constructor(private service: CartService) { }
 
   ngOnInit() {
-    this.items = this.service.getItems();
+    this.updateView();
   }
 
   emptyCart() {
     this.service.emptyCart();
-    this.items = this.service.getItems();
+    this.updateView();
   }
 
   removeItem(item: CartItem) {
     this.service.removeItem(item);
-    this.items = this.service.getItems();
+    this.updateView();
+  }
+
+  changeQuantity(item: CartItem) {
+    this.service.changeQuantity(item);
+    this.updateView();
   }
 
   changeView() {
     this.viewChange.emit(ActiveView.productsList);
+  }
+
+  private updateView() {
+    this.items = this.service.getItems();
+    this.totalCount = this.service.getCartCount();
+    this.totalSum = this.service.getCartSum();
   }
 }

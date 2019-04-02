@@ -3,33 +3,16 @@
   Your cart is empty.
 </div>
 <ng-template #cartSummary>
-  <table>
-    <thead>
-      <tr>
-        <td>
-          Name
-        </td>
-        <td>
-          Price
-        </td>
-        <td>
-          Quantity
-        </td>
-        <td>
-          Sum
-        </td>
-        <td></td>
-      </tr>
-    </thead>
-
-    <tbody>
-      <app-cart-item
-        *ngFor="let item of items"
-        [item]="item"
-        (itemRemove)="removeItem($event)"
-      ></app-cart-item>
-    </tbody>
-  </table>
+  <app-cart-item
+    *ngFor="let item of items"
+    [item]="item"
+    (itemRemove)="removeItem($event)"
+    (quantityChange)="changeQuantity($event)"
+  ></app-cart-item>
+  <div>
+    <div><span>Total count:</span>{{ totalCount }}</div>
+    <div><span>Total sum:</span>{{ totalSum }}</div>
+  </div>
   <button (click)="emptyCart()">Empty cart</button>
 </ng-template>
 <div>

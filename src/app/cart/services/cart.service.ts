@@ -34,7 +34,18 @@ export class CartService {
     }
   }
 
+  changeQuantity(item: CartItem) {
+    const cartItemIndex = this.items.findIndex(i => i.name === item.name);
+    if (cartItemIndex !== -1) {
+      this.items[cartItemIndex].quantity = item.quantity;
+    }
+  }
+
   getCartSum(): number {
     return this.items.reduce((sum, item) => sum += item.price * item.quantity, 0);
+  }
+
+  getCartCount(): number {
+    return this.items.reduce((count, item) => count += item.quantity, 0);
   }
 }
