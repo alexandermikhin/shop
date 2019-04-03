@@ -1,4 +1,4 @@
-<div appHighlight>
+<div appHighlight [ngClass]="{ 'app-product_not-available': !product.isAvailable }">
   <div>
     <span>Name </span>
     <span>{{ product.name }}</span>
