@@ -56,10 +56,10 @@ export class CartService {
     this.udpateCartSummary();
   }
 
-  changeQuantity(item: CartItem) {
+  updateCartItem(item: CartItem) {
     const cartItemIndex = this.items.findIndex(i => i.name === item.name);
     if (cartItemIndex !== -1) {
-      this.items[cartItemIndex].quantity = item.quantity;
+      this.items[cartItemIndex] = { ...item };
     }
 
     this.udpateCartSummary();

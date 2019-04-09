@@ -46,7 +46,7 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
 
   changeQuantity(item: CartItem) {
-    this.service.changeQuantity(item);
+    this.service.updateCartItem(item);
   }
 
   changeView() {
