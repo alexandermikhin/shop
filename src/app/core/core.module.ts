@@ -1,10 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Generator15, generatorFactory } from './services/generator-factory';
+import { GeneratorService } from './services/generator.service';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule
-  ]
+  providers: [
+    {
+      provide: Generator15,
+      useFactory: generatorFactory(15),
+      deps: [GeneratorService]
+    }
+  ],
+  imports: [CommonModule]
 })
-export class CoreModule { }
+export class CoreModule {}
