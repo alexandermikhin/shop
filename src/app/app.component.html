@@ -1,4 +1,9 @@
 <h1 #appTitle></h1>
+<ul>
+  <li><a href="javascripts: void(0);" (click)="setView(ActiveView.productsList)">Products list</a></li>
+  <li><a href="javascripts: void(0);" (click)="setView(ActiveView.cart)">Cart</a></li>
+  <li><a href="javascripts: void(0);" (click)="setView(ActiveView.contactUs)">Contact us</a></li>
+</ul>
 <ng-container [ngSwitch]="activeView">
   <app-product-list
     *ngSwitchCase="ActiveView.productsList"
@@ -8,5 +13,5 @@
     *ngSwitchCase="ActiveView.cart"
     (viewChange)="setView($event)"
   ></app-cart-list>
+  <app-contact-us *ngSwitchCase="ActiveView.contactUs"></app-contact-us>
 </ng-container>
-

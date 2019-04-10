@@ -9,6 +9,7 @@ import { constantsService } from './models/constants';
 @NgModule({
   declarations: [],
   providers: [
+    GeneratorService,
     { provide: ConstantsService, useValue: constantsService},
     {
       provide: Generator15,

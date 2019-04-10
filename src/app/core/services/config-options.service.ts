@@ -23,9 +23,7 @@ export class ConfigOptionsService {
    * Gets configuration option by key.
    * @param key Configuration key.
    */
-  getConfig(key: string): ConfigOption {
-    return {
-      [key]: this.config[key]
-    };
+  getConfig(key: string): string {
+    return this.config[key];
   }
 }

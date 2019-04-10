@@ -6,9 +6,10 @@ import { CoreModule } from './core/core.module';
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { SharedModule } from './shared/shared.module';
+import { ContactUsComponent } from './components/contact-us/contact-us.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ContactUsComponent],
   imports: [
     BrowserModule,
     CartModule,

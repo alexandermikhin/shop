@@ -13,7 +13,9 @@ export class GeneratorService {
     const availableCharsLength = this.availableChars.length;
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < length; i++) {
-      sequence += this.availableChars[Math.floor(Math.random() * availableCharsLength)];
+      sequence += this.availableChars[
+        Math.floor(Math.random() * 1000) % availableCharsLength
+      ];
     }
 
     return sequence;
