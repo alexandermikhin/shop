@@ -1,8 +1,18 @@
 <h1 #appTitle></h1>
-<ul>
-  <li><a href="javascripts: void(0);" (click)="setView(ActiveView.productsList)">Products list</a></li>
-  <li><a href="javascripts: void(0);" (click)="setView(ActiveView.cart)">Cart</a></li>
-  <li><a href="javascripts: void(0);" (click)="setView(ActiveView.contactUs)">Contact us</a></li>
+<ul class="app-component-menu">
+  <li appBorder class="app-component-menu__item">
+    <a href="javascripts: void(0);" (click)="setView(ActiveView.productsList)"
+      >Products list</a
+    >
+  </li>
+  <li appBorder="yellow" class="app-component-menu__item">
+    <a href="javascripts: void(0);" (click)="setView(ActiveView.cart)">Cart</a>
+  </li>
+  <li appBorder="green" class="app-component-menu__item">
+    <a href="javascripts: void(0);" (click)="setView(ActiveView.contactUs)"
+      >Contact us</a
+    >
+  </li>
 </ul>
 <ng-container [ngSwitch]="activeView">
   <app-product-list
