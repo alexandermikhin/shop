@@ -1,5 +1,9 @@
 # Changelog
 
+## Task 3 Update
+* Remove ProductsService declaration in ProductsModule as it is duplicate.
+* In SharedModule make common declared and exported directives.
+
 ## Task 3
 * Add click border directive.
 * Create ContactUsComponent.
