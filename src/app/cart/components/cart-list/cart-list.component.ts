@@ -9,6 +9,7 @@ import { ActiveView } from 'src/app/models/active-view';
 import { CartItem } from '../../models/cart-item.model';
 import { CartService } from '../../services/cart.service';
 import { Subscription } from 'rxjs';
+import { SortOption } from 'src/app/shared/pipes/order-by.pipe';
 
 @Component({
   selector: 'app-cart-list',
@@ -20,6 +21,8 @@ export class CartListComponent implements OnInit, OnDestroy {
   items: CartItem[];
   totalCount: number;
   totalSum: number;
+  selectedSorting: SortOption = 'name';
+  isDescending = false;
 
   private subscription = new Subscription();
 
