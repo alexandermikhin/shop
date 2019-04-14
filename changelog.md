@@ -1,5 +1,15 @@
 # Changelog
 
+## Task 4
+* Add sorting to the cart list.
+* Add OrderByPipe.
+* Use Promise in ProductsService. Update ProductListComponent to use Promise from the service.
+* Use pipes to display data:
+  - TitleCasePipe for product name.
+  - UpperCasePipe for product category.
+  - CurrencyPipe for price.
+  - Date pipe for product update date.
+
 ## Task 3 Update
 * Remove ProductsService declaration in ProductsModule as it is duplicate.
 * In SharedModule make common declared and exported directives.
