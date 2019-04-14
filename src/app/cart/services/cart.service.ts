@@ -76,6 +76,7 @@ export class CartService {
   private udpateCartSummary() {
     this.updateTotalSum();
     this.updateTotalCount();
+    this.updateItems();
   }
 
   private updateTotalSum() {
@@ -92,5 +93,10 @@ export class CartService {
       0
     );
     this.totalCountSubject.next(this.totalCount);
+  }
+
+  private updateItems() {
+    this.items = [...this.items];
+    this.itemsChangeSubject.next(this.items);
   }
 }
