@@ -1,5 +1,6 @@
 <h2>Products list</h2>
-<div *ngFor="let product of products">
+<div *ngIf="isLoading; else productsList">Loading...</div>
+<div *ngFor="let product of (products | async)" #productsList>
   <app-product [product]="product"></app-product>
   <button *ngIf="product.isAvailable" (click)="onBuy(product)">Add to cart</button>
   <hr/>

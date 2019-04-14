@@ -12,8 +12,9 @@ import { ProductsService } from '../../services/products.service';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   @Output() viewChange = new EventEmitter<ActiveView>();
-  products: ProductModel[];
+  products: Promise<ProductModel[]>;
   cartSum: number;
+  isLoading = true;
 
   private subscription = new Subscription();
 
@@ -27,6 +28,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.cartSum = this.cartService.cartSum;
     this.products = this.productsService.getProducts();
+    this.products.finally(() => this.isLoading = false);
   }
 
   ngOnDestroy() {
