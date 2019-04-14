@@ -1,23 +1,27 @@
 <div appHighlight [ngClass]="{ 'app-product_not-available': !product.isAvailable }">
   <div>
-    <span>Name </span>
-    <span>{{ product.name }}</span>
+    <span>Name: </span>
+    <span>{{ product.name | titlecase }}</span>
   </div>
   <div>
-    <span>Description </span>
+    <span>Description: </span>
     <span>{{ product.description }}</span>
   </div>
   <div>
-    <span>Category </span>
-    <span>{{ product.category }}</span>
+    <span>Category: </span>
+    <span>{{ product.category | uppercase }}</span>
   </div>
   <div>
-    <span>Is available </span>
+    <span>Is available: </span>
     <span>{{ product.isAvailable }}</span>
   </div>
   <div>
     <span>Price: </span>
-    <span>{{ product.price }}</span>
+    <span>{{ product.price | currency:'BYN':'code':'.2-2' }}</span>
+  </div>
+  <div>
+    <span>Update date: </span>
+    <span>{{ product.updateDate | date:'dd.MM.yyyy' }}</span>
   </div>
   <div>
     <span>Suppliers:</span>
