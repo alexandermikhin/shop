@@ -1,4 +1,8 @@
-<div appHighlight [ngClass]="{ 'app-product_not-available': !product.isAvailable }">
+<div
+  *ngIf="product"
+  appHighlight
+  [ngClass]="{ 'app-product_not-available': !product.isAvailable }"
+>
   <div>
     <span>Name: </span>
     <span>{{ product.name | titlecase }}</span>
@@ -17,11 +21,11 @@
   </div>
   <div>
     <span>Price: </span>
-    <span>{{ product.price | currency:'BYN':'code':'.2-2' }}</span>
+    <span>{{ product.price | currency: 'BYN':'code':'.2-2' }}</span>
   </div>
   <div>
     <span>Update date: </span>
-    <span>{{ product.updateDate | date:'dd.MM.yyyy' }}</span>
+    <span>{{ product.updateDate | date: 'dd.MM.yyyy' }}</span>
   </div>
   <div>
     <span>Suppliers:</span>
@@ -32,4 +36,3 @@
     </ul>
   </div>
 </div>
-

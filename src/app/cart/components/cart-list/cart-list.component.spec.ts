@@ -1,6 +1,8 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CartListComponent } from './cart.component';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { CartListComponent } from './cart-list.component';
 
 describe('CartComponent', () => {
   let component: CartListComponent;
@@ -8,9 +10,10 @@ describe('CartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CartListComponent ]
-    })
-    .compileComponents();
+      imports: [SharedModule, FormsModule],
+      declarations: [CartListComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
