@@ -1,27 +1,68 @@
-<h1 #appTitle></h1>
-<ul class="app-component-menu">
-  <li appBorder class="app-component-menu__item">
-    <a href="javascripts: void(0);" (click)="setView(ActiveView.productsList)"
-      >Products list</a
-    >
-  </li>
-  <li appBorder="yellow" class="app-component-menu__item">
-    <a href="javascripts: void(0);" (click)="setView(ActiveView.cart)">Cart</a>
-  </li>
-  <li appBorder="green" class="app-component-menu__item">
-    <a href="javascripts: void(0);" (click)="setView(ActiveView.contactUs)"
-      >Contact us</a
-    >
-  </li>
-</ul>
-<ng-container [ngSwitch]="activeView">
-  <app-product-list
-    *ngSwitchCase="ActiveView.productsList"
-    (viewChange)="setView($event)"
-  ></app-product-list>
-  <app-cart-list
-    *ngSwitchCase="ActiveView.cart"
-    (viewChange)="setView($event)"
-  ></app-cart-list>
-  <app-contact-us *ngSwitchCase="ActiveView.contactUs"></app-contact-us>
-</ng-container>
+<div>
+  <div>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#bs-example-navbar-collapse-1"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a
+            class="navbar-brand"
+            href="javascript: void(0);"
+            (click)="setView(ActiveView.productsList)"
+            >Shop application</a
+          >
+        </div>
+
+        <div>
+          <ul class="nav navbar-nav">
+            <li>
+              <a
+                href="javascript: void(0);"
+                (click)="setView(ActiveView.productsList)"
+                >Products</a
+              >
+            </li>
+            <li>
+              <a href="javascript: void(0);" (click)="setView(ActiveView.cart)"
+                >Cart</a
+              >
+            </li>
+            <li>
+              <a
+                href="javascript: void(0);"
+                (click)="setView(ActiveView.contactUs)"
+                >Contact us</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="col-md-12">
+        <ng-container [ngSwitch]="activeView">
+          <app-product-list
+            *ngSwitchCase="ActiveView.productsList"
+            (viewChange)="setView($event)"
+          ></app-product-list>
+          <app-cart-list
+            *ngSwitchCase="ActiveView.cart"
+            (viewChange)="setView($event)"
+          ></app-cart-list>
+          <app-contact-us *ngSwitchCase="ActiveView.contactUs"></app-contact-us>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
