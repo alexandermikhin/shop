@@ -1,38 +1,19 @@
-<div
-  *ngIf="product"
-  appHighlight
-  [ngClass]="{ 'app-product_not-available': !product.isAvailable }"
->
-  <div>
-    <span>Name: </span>
-    <span>{{ product.name | titlecase }}</span>
-  </div>
-  <div>
-    <span>Description: </span>
-    <span>{{ product.description }}</span>
-  </div>
-  <div>
-    <span>Category: </span>
-    <span>{{ product.category | uppercase }}</span>
-  </div>
-  <div>
-    <span>Is available: </span>
-    <span>{{ product.isAvailable }}</span>
-  </div>
-  <div>
-    <span>Price: </span>
-    <span>{{ product.price | currency: 'BYN':'code':'.2-2' }}</span>
-  </div>
-  <div>
-    <span>Update date: </span>
-    <span>{{ product.updateDate | date: 'dd.MM.yyyy' }}</span>
-  </div>
-  <div>
-    <span>Suppliers:</span>
+<div *ngIf="product" class="panel panel-default">
+  <div class="panel-heading">{{ product.name | titlecase }}</div>
+  <div class="panel-body">
     <ul>
-      <li *ngFor="let supplier of product.suppliers">
-        {{ supplier }}
-      </li>
+      <li>Description: {{ product.description }}</li>
+      <li>Category: {{ product.category | uppercase }}</li>
+      <li>Available: {{ product.isAvailable }}</li>
+      <li>Price: {{ product.price | currency: 'BYN':'code':'.2-2' }}</li>
+      <li>Update date: {{ product.updateDate | date: 'dd.MM.yyyy' }}</li>
     </ul>
+    <button
+      class="btn btn-primary btn-sm"
+      (click)="onAddToCart()"
+      [disabled]="!product.isAvailable"
+    >
+      Add to cart
+    </button>
   </div>
 </div>
