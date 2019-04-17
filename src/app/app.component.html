@@ -18,17 +18,15 @@
           <a
             class="navbar-brand"
             href="javascript: void(0);"
-            (click)="setView(ActiveView.productsList)"
+            routerLink="/products-list"
             >Shop application</a
           >
         </div>
 
         <div>
           <ul class="nav navbar-nav">
-            <li>
-              <a
-                href="javascript: void(0);"
-                (click)="setView(ActiveView.productsList)"
+            <li routerLinkActive="active">
+              <a href="javascript: void(0);" routerLink="/products-list"
                 >Products</a
               >
             </li>
@@ -50,8 +48,9 @@
     </nav>
 
     <div class="container">
-      <div class="col-md-12">
-        <ng-container [ngSwitch]="activeView">
+      <div class="col-md-10">
+        <router-outlet></router-outlet>
+        <!-- <ng-container [ngSwitch]="activeView">
           <app-product-list
             *ngSwitchCase="ActiveView.productsList"
             (viewChange)="setView($event)"
@@ -61,7 +60,7 @@
             (viewChange)="setView($event)"
           ></app-cart-list>
           <app-contact-us *ngSwitchCase="ActiveView.contactUs"></app-contact-us>
-        </ng-container>
+        </ng-container> -->
       </div>
     </div>
   </div>
