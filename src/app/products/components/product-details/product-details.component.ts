@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ProductModel } from '../../models/product.model';
-import { Route } from '@angular/compiler/src/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ProductsService } from '../../services/products.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { FeedbacksService } from 'src/app/feedbacks/services/feedbacks.service';
+import { ProductModel } from '../../models/product.model';
+import { ProductsService } from '../../services/products.service';
 
 @Component({
   templateUrl: './product-details.component.html',
@@ -14,7 +14,8 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    public feedbacksService: FeedbacksService
   ) {}
 
   ngOnInit() {
@@ -33,6 +34,13 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   onGoBack() {
+    this.feedbacksService.isDisplayed = false;
     this.router.navigate(['/products-list']);
+  }
+
+  onShowFeedbacks() {
+    this.router.navigate([ '/product', this.product.id, { outlets: { feedback: ['feedback']}}]);
+    this.feedbacksService.activeProductId = this.product.id;
+    this.feedbacksService.isDisplayed = true;
   }
 }

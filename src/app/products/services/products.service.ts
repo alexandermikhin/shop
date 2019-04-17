@@ -65,7 +65,7 @@ export class ProductsService {
 
   getProducts(): Promise<ProductModel[]> {
     return new Promise(resolve => {
-      setTimeout(() => resolve(products), 3000);
+      setTimeout(() => resolve(products), 0);
     });
   }
 
@@ -74,7 +74,7 @@ export class ProductsService {
       setTimeout(() => {
         const product = products.find(p => p.id === id);
         resolve(product);
-      }, 500);
+      }, 0);
     });
   }
 }

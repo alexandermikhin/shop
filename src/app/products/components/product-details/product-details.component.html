@@ -18,4 +18,14 @@
   <button class="btn btn-sm" (click)="onGoBack()">
     Back
   </button>
+  <div>
+    <button
+          class="btn btn-sm"
+          *ngIf="!feedbacksService.isDisplayed"
+          (click)="onShowFeedbacks()"
+        >
+          Show feedbacks
+        </button>
+        <router-outlet name="feedback"></router-outlet>
+  </div>
 </div>
