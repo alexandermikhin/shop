@@ -1,4 +1,4 @@
-import { ConstantsService } from "../services/constants.service";
+import { ConstantsService } from '../services/constants.service';
 
 export const constantsService: ConstantsService = {
   app: 'Shop',
