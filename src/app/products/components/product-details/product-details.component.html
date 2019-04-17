@@ -1,0 +1,21 @@
+<div *ngIf="product">
+  <h2>{{ product.name | titlecase }}</h2>
+  <ul>
+    <li>Description: {{ product.description }}</li>
+    <li>Category: {{ product.category | uppercase }}</li>
+    <li>Available: {{ product.isAvailable }}</li>
+    <li>Price: {{ product.price | currency: 'BYN':'code':'.2-2' }}</li>
+    <li>Update date: {{ product.updateDate | date: 'dd.MM.yyyy' }}</li>
+    <li>
+      Suppliers:
+      <ul>
+        <li *ngFor="let supplier of product.suppliers">
+          {{ supplier }}
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <button class="btn btn-sm" (click)="onGoBack()">
+    Back
+  </button>
+</div>
