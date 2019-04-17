@@ -3,6 +3,7 @@ import { ProductModel } from '../models/product.model';
 
 const products: ProductModel[] = [
   {
+    id: 1,
     category: 'category-1',
     description: 'product-1-description',
     isAvailable: true,
@@ -15,6 +16,7 @@ const products: ProductModel[] = [
     updateDate: new Date(2019, 0, 1)
   },
   {
+    id: 2,
     category: 'category-2',
     description: 'product-2-description',
     isAvailable: false,
@@ -27,6 +29,7 @@ const products: ProductModel[] = [
     updateDate: new Date(2018, 11, 1)
   },
   {
+    id: 3,
     category: 'category-3',
     description: 'product-3-description',
     isAvailable: true,
@@ -39,6 +42,7 @@ const products: ProductModel[] = [
     updateDate: new Date(2018, 10, 30)
   },
   {
+    id: 4,
     category: 'category-3',
     description: 'product-4-description',
     isAvailable: true,
@@ -62,6 +66,15 @@ export class ProductsService {
   getProducts(): Promise<ProductModel[]> {
     return new Promise(resolve => {
       setTimeout(() => resolve(products), 3000);
+    });
+  }
+
+  getProduct(id: number): Promise<ProductModel> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const product = products.find(p => p.id === id);
+        resolve(product);
+      }, 500);
     });
   }
 }

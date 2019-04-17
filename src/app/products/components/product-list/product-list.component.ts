@@ -3,9 +3,9 @@ import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { ProductModel } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
@@ -17,6 +17,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(
+    private router: Router,
     private productsService: ProductsService,
     private cartService: CartService
   ) {
@@ -39,6 +40,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
       price: product.price,
       quantity: 1
     });
+  }
+
+  onSeeDetails(product: ProductModel) {
+    const link = ['/product', product.id];
+    this.router.navigate(link);
   }
 
   private initSubscription() {

@@ -1,7 +1,8 @@
 <h2>Products list</h2>
 <div *ngIf="isLoading; else productsList">Loading...</div>
 <div *ngFor="let product of (products | async)" #productsList>
-  <app-product [product]="product" (addToCart)="onBuy($event)"></app-product>
+  <app-product [product]="product" (addToCart)="onBuy($event)"
+  (seeDetails)="onSeeDetails($event)"></app-product>
 </div>
 <div>
   <span>Cart sum: </span

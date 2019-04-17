@@ -1,6 +1,7 @@
 import { Product } from './product';
 
 export class ProductModel implements Product {
+  id: number;
   name: string;
   description: string;
   price: number;

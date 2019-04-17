@@ -9,8 +9,13 @@ import { ProductModel } from '../../models/product.model';
 export class ProductComponent {
   @Input() product: ProductModel;
   @Output() addToCart = new EventEmitter<ProductModel>();
+  @Output() seeDetails = new EventEmitter<ProductModel>();
 
   onAddToCart() {
     this.addToCart.emit(this.product);
+  }
+
+  onSeeDetails() {
+    this.seeDetails.emit(this.product);
   }
 }
