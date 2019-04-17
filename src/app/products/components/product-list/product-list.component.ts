@@ -1,7 +1,6 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/cart/services/cart.service';
-import { ActiveView } from 'src/app/models/active-view';
 import { ProductModel } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';
 
@@ -11,7 +10,6 @@ import { ProductsService } from '../../services/products.service';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-  @Output() viewChange = new EventEmitter<ActiveView>();
   products: Promise<ProductModel[]>;
   cartSum: number;
   isLoading = true;
@@ -28,7 +26,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.cartSum = this.cartService.cartSum;
     this.products = this.productsService.getProducts();
-    this.products.finally(() => this.isLoading = false);
+    this.products.finally(() => (this.isLoading = false));
   }
 
   ngOnDestroy() {
@@ -41,10 +39,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
       price: product.price,
       quantity: 1
     });
-  }
-
-  changeView() {
-    this.viewChange.emit(ActiveView.cart);
   }
 
   private initSubscription() {

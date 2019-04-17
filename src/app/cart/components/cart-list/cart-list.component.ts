@@ -1,15 +1,8 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  OnDestroy
-} from '@angular/core';
-import { ActiveView } from 'src/app/models/active-view';
-import { CartItem } from '../../models/cart-item.model';
-import { CartService } from '../../services/cart.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SortOption } from 'src/app/shared/pipes/order-by.pipe';
+import { CartItem } from '../../models/cart-item.model';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-cart-list',
@@ -17,7 +10,6 @@ import { SortOption } from 'src/app/shared/pipes/order-by.pipe';
   styleUrls: ['./cart-list.component.css']
 })
 export class CartListComponent implements OnInit, OnDestroy {
-  @Output() viewChange = new EventEmitter<ActiveView>();
   items: CartItem[];
   totalCount: number;
   totalSum: number;
@@ -50,10 +42,6 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   changeQuantity(item: CartItem) {
     this.service.updateCartItem(item);
-  }
-
-  changeView() {
-    this.viewChange.emit(ActiveView.productsList);
   }
 
   private initSubscription() {
