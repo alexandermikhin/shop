@@ -38,9 +38,13 @@ export class ProductDetailsComponent implements OnInit {
     this.router.navigate(['/products-list']);
   }
 
-  onShowFeedbacks() {
-    this.router.navigate([ '/product', this.product.id, { outlets: { feedback: ['feedback']}}]);
+  toggleFeedbacks(display: boolean) {
     this.feedbacksService.activeProductId = this.product.id;
-    this.feedbacksService.isDisplayed = true;
+    this.feedbacksService.isDisplayed = display;
+    if (display) {
+      this.router.navigate([{ outlets: { feedback: ['feedback'] } }]);
+    } else {
+      this.router.navigate([{ outlets: { feedback: null } }]);
+    }
   }
 }

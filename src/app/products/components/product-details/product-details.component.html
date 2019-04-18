@@ -20,12 +20,19 @@
   </button>
   <div>
     <button
-          class="btn btn-sm"
-          *ngIf="!feedbacksService.isDisplayed"
-          (click)="onShowFeedbacks()"
-        >
-          Show feedbacks
-        </button>
-        <router-outlet name="feedback"></router-outlet>
+      class="btn btn-sm"
+      *ngIf="!feedbacksService.isDisplayed"
+      (click)="toggleFeedbacks(true)"
+    >
+      Show feedbacks
+    </button>
+    <button
+      class="btn btn-sm"
+      *ngIf="feedbacksService.isDisplayed"
+      (click)="toggleFeedbacks(false)"
+    >
+      Hide feedbacks
+    </button>
+    <router-outlet name="feedback"></router-outlet>
   </div>
 </div>

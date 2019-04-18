@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { FeedbacksService } from '../../services/feedbacks.service';
 
 @Component({
@@ -10,21 +9,16 @@ import { FeedbacksService } from '../../services/feedbacks.service';
 export class FeedbacksComponent {
   feedback = '';
 
-  constructor(
-    public feedbacksService: FeedbacksService,
-    private router: Router
-  ) {
-  }
-
-
-  onClose() {
-    this.router.navigate(['/product', this.feedbacksService.activeProductId, { outlets: { feedback: null } }]);
-    this.feedbacksService.isDisplayed = false;
+  constructor(public feedbacksService: FeedbacksService) {
+    console.log('Feedback component construstor.');
   }
 
   onSend() {
     if (this.feedback) {
-      this.feedbacksService.add(this.feedbacksService.activeProductId, this.feedback);
+      this.feedbacksService.add(
+        this.feedbacksService.activeProductId,
+        this.feedback
+      );
       this.feedback = '';
     }
   }

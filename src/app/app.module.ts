@@ -8,8 +8,6 @@ import { CoreModule } from './core/core.module';
 import { OrdersModule } from './orders/orders.module';
 import { ProductsModule } from './products/products.module';
 import { SharedModule } from './shared/shared.module';
-import { Router } from '@angular/router';
-import { FeedbacksModule } from './feedbacks/feedbacks.module';
 
 @NgModule({
   declarations: [AppComponent, ContactUsComponent],
@@ -18,7 +16,6 @@ import { FeedbacksModule } from './feedbacks/feedbacks.module';
     CartModule,
     ProductsModule,
     OrdersModule,
-    FeedbacksModule,
     CoreModule,
     AppRoutingModule,
     SharedModule
@@ -26,8 +23,4 @@ import { FeedbacksModule } from './feedbacks/feedbacks.module';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-  constructor(router: Router) {
-    console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
-  }
-}
+export class AppModule {}
