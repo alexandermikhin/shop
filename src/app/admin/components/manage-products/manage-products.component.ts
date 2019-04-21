@@ -4,20 +4,15 @@ import { ProductsService } from 'src/app/products/services/products.service';
 
 @Component({
   selector: 'app-manage-products',
-  templateUrl: './manage-products.component.html',
+  templateUrl: './manage-products.component.html'
 })
 export class ManageProductsComponent implements OnInit {
-
   products: ProductModel[];
 
-  constructor(private productsService: ProductsService) { }
+  constructor(private productsService: ProductsService) {}
 
   ngOnInit() {
     this.initProducts();
-  }
-
-  onEdit(product: ProductModel) {
-    
   }
 
   async onDelete(product: ProductModel) {
@@ -28,5 +23,4 @@ export class ManageProductsComponent implements OnInit {
   private async initProducts() {
     this.products = await this.productsService.getProducts();
   }
-
 }

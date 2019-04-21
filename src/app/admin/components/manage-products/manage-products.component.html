@@ -1,4 +1,4 @@
-<button class="btn btn-primary">Add product</button>
+<button class="btn btn-primary" routerLink="/admin/product/add">Add product</button>
 <table class="table">
   <thead>
     <tr>
@@ -7,6 +7,7 @@
       <th>Description</th>
       <th>Category</th>
       <th>Available</th>
+      <th>Last edited</th>
       <th></th>
     </tr>
   </thead>
@@ -17,8 +18,9 @@
       <td>{{ product.description }}</td>
       <td>{{ product.category }}</td>
       <td>{{ product.isAvailable }}</td>
+      <td>{{ product.updateDate }}</td>
       <td>
-        <button class="btn btn-sm" (click)="onEdit(product)">Edit</button>
+        <button class="btn btn-sm" [routerLink]="['../product/edit', product.id]">Edit</button>
         <button class="btn btn-sm btn-danger" (click)="onDelete(product)">Delete</button>
       </td>
     </tr>
