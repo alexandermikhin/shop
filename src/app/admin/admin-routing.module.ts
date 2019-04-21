@@ -6,6 +6,8 @@ import { ManageOrdersComponent } from './components/manage-orders/manage-orders.
 import { ManageProductsComponent } from './components/manage-products/manage-products.component';
 import { ManageProductComponent } from './components/manage-product/manage-product.component';
 import { ManageOrderComponent } from './components/manage-order/manage-order.component';
+import { CanDeactivateGuard } from '../core/guards/can-deactivate.guard';
+import { ProductResolveGuard } from './guards/product-resolve.guard';
 
 const routes: Routes = [
   {
@@ -20,7 +22,14 @@ const routes: Routes = [
             path: 'product',
             children: [
               { path: 'add', component: ManageProductComponent },
-              { path: 'edit/:productID', component: ManageProductComponent }
+              {
+                path: 'edit/:productID',
+                component: ManageProductComponent,
+                canDeactivate: [CanDeactivateGuard],
+                resolve: {
+                  product: ProductResolveGuard
+                }
+              }
             ]
           },
           { path: 'orders', component: ManageOrdersComponent },

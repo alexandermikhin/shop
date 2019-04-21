@@ -63,12 +63,27 @@ export class ProductsService {
     });
   }
 
+  addProduct(product: ProductModel): Promise<ProductModel> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        const id = products
+          .map(p => p.id)
+          .reduce((prev, cur) => {
+            return prev < cur ? cur : prev;
+          });
+        const savedProduct = { ...product, id, updateDate: new Date() };
+        products.push(savedProduct);
+        resolve(savedProduct);
+      });
+    });
+  }
+
   editProduct(product: ProductModel): Promise<ProductModel> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const productIndex = products.findIndex(p => p.id === product.id);
         if (productIndex > -1) {
-          products[productIndex] = { ...product };
+          products[productIndex] = { ...product, updateDate: new Date() };
           resolve(product);
         } else {
           reject('Product to edit was not found');
