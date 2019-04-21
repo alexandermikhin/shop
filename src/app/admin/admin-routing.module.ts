@@ -9,14 +9,17 @@ import { ManageOrderComponent } from './components/manage-order/manage-order.com
 import { CanDeactivateGuard } from '../core/guards/can-deactivate.guard';
 import { ProductResolveGuard } from './guards/product-resolve.guard';
 import { OrderResolveGuard } from './guards/order-resolve-guard';
+import { AuthGuard } from '../core/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
+        canActivateChild: [AuthGuard],
         children: [
           { path: 'products', component: ManageProductsComponent },
           {
