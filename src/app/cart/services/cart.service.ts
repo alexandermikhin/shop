@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CartItem } from '../models/cart-item.model';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,9 @@ export class CartService {
   private totalSumSubject = new Subject<number>();
   private totalCountSubject = new Subject<number>();
 
-  constructor() {}
+  constructor(private localStorageService: LocalStorageService) {
+    this.initCartItems();
+  }
 
   get itemsChanged(): Observable<CartItem[]> {
     return this.itemsChangeSubject.asObservable();
@@ -77,6 +80,7 @@ export class CartService {
     this.updateTotalSum();
     this.updateTotalCount();
     this.updateItems();
+    this.setToStorage();
   }
 
   private updateTotalSum() {
@@ -98,5 +102,17 @@ export class CartService {
   private updateItems() {
     this.items = [...this.items];
     this.itemsChangeSubject.next(this.items);
+  }
+
+  private initCartItems() {
+    const storageItems = this.localStorageService.getItem('cart');
+    this.items = storageItems ? JSON.parse(storageItems) : [];
+    this.updateTotalSum();
+    this.updateTotalCount();
+    this.updateItems();
+  }
+
+  private setToStorage() {
+    this.localStorageService.setItem('cart', JSON.stringify(this.items));
   }
 }
