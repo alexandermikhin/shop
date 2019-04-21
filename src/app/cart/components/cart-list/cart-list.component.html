@@ -3,25 +3,38 @@
   Your cart is empty.
 </div>
 <ng-template #cartSummary>
-  <select [(ngModel)]="selectedSorting">
-    <option value="name">By name</option>
-    <option value="price">By price</option>
-    <option value="sum">By sum</option>
-  </select>
-  <input type="checkbox" id="sort-descending" [(ngModel)]="isDescending">
-  <label for="sort-descending">Descending order </label>
+  <div class="row">
+    <div class="col-sm-3">
+      <select class="form-control" [(ngModel)]="selectedSorting">
+        <option value="name">By name</option>
+        <option value="price">By price</option>
+        <option value="sum">By sum</option>
+      </select>
+    </div>
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" [(ngModel)]="isDescending" />
+      Descending order</label
+    >
+  </div>
+
   <app-cart-item
-    *ngFor="let item of (items | orderBy: selectedSorting: isDescending)"
+    *ngFor="let item of (items | orderBy: selectedSorting:isDescending)"
     [item]="item"
     (itemRemove)="removeItem($event)"
     (quantityChange)="changeQuantity($event)"
   ></app-cart-item>
   <div>
     <div><span>Total count:</span>{{ totalCount }}</div>
-    <div><span>Total sum:</span>{{ totalSum | currency:'BYN':'code':'.2-2' }}</div>
+    <div>
+      <span>Total sum:</span>{{ totalSum | currency: 'BYN':'code':'.2-2' }}
+    </div>
   </div>
-  <button (click)="emptyCart()">Empty cart</button>
+  <button class="btn btn-danger" (click)="emptyCart()">Empty cart</button>
 </ng-template>
 <div>
-  <a href="javascript:void(0)" routerLink="/products-list">Go to products list</a>
+  <a href="javascript:void(0)" routerLink="/products-list"
+    >Go to products list</a
+  >
 </div>
