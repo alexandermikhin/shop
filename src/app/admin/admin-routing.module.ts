@@ -8,6 +8,7 @@ import { ManageProductComponent } from './components/manage-product/manage-produ
 import { ManageOrderComponent } from './components/manage-order/manage-order.component';
 import { CanDeactivateGuard } from '../core/guards/can-deactivate.guard';
 import { ProductResolveGuard } from './guards/product-resolve.guard';
+import { OrderResolveGuard } from './guards/order-resolve-guard';
 
 const routes: Routes = [
   {
@@ -36,7 +37,14 @@ const routes: Routes = [
           {
             path: 'order',
             children: [
-              { path: 'edit/:orderID', component: ManageOrderComponent }
+              {
+                path: 'edit/:orderID',
+                component: ManageOrderComponent,
+                canDeactivate: [CanDeactivateGuard],
+                resolve: {
+                  order: OrderResolveGuard
+                }
+              }
             ]
           },
           { path: '', component: AdminDashboardComponent }

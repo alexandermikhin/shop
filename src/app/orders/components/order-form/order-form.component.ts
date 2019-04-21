@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { Order } from '../../models/order.model';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-order-form',
@@ -15,6 +16,7 @@ export class OrderFormComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private dialogService: DialogService,
+    private orderService: OrderService,
     private router: Router
   ) {}
 
@@ -23,7 +25,9 @@ export class OrderFormComponent implements OnInit {
       .getItems()
       .filter(item => item.quantity > 0);
     this.order = {
+      id: 0,
       cartItems,
+      date: new Date(),
       name: '',
       deliveryAddress: ''
     };
@@ -33,6 +37,7 @@ export class OrderFormComponent implements OnInit {
 
   onProcessOrder() {
     console.log('Process order');
+    this.orderService.addOrder(this.order);
     this.cartService.emptyCart();
     this.router.navigate(['/products-list']);
   }

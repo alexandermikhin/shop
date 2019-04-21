@@ -71,7 +71,7 @@ export class ProductsService {
           .reduce((prev, cur) => {
             return prev < cur ? cur : prev;
           });
-        const savedProduct = { ...product, id, updateDate: new Date() };
+        const savedProduct = { ...product, id: id + 1, updateDate: new Date() };
         products.push(savedProduct);
         resolve(savedProduct);
       });
