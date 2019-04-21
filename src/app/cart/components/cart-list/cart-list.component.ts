@@ -36,12 +36,11 @@ export class CartListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  emptyCart() {
-    this.dialogService.confirm('Should empty cart?').then(result => {
-      if (result) {
-        this.cartService.emptyCart();
-      }
-    });
+  async emptyCart() {
+    const result = await this.dialogService.confirm('Should empty cart?');
+    if (result) {
+      this.cartService.emptyCart();
+    }
   }
 
   removeItem(item: CartItem) {
