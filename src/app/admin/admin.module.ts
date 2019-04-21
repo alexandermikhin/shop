@@ -8,6 +8,7 @@ import { ManageOrderComponent } from './components/manage-order/manage-order.com
 import { ManageOrdersComponent } from './components/manage-orders/manage-orders.component';
 import { ManageProductComponent } from './components/manage-product/manage-product.component';
 import { ManageProductsComponent } from './components/manage-products/manage-products.component';
+import { OrderResolveGuard } from './guards/order-resolve-guard';
 import { ProductResolveGuard } from './guards/product-resolve.guard';
 
 @NgModule({
@@ -20,6 +21,6 @@ import { ProductResolveGuard } from './guards/product-resolve.guard';
     ManageOrderComponent,
     ManageProductComponent
   ],
-  providers: [ProductResolveGuard]
+  providers: [ProductResolveGuard, OrderResolveGuard]
 })
 export class AdminModule {}

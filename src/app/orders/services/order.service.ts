@@ -22,6 +22,16 @@ export class OrderService {
     return savedOrder;
   }
 
+  editOrder(order: Order): Order {
+    const index = this.orders.findIndex(o => o.id === order.id);
+    if (index === -1) {
+      throw new Error('No order found');
+    }
+
+    this.orders[index] = {...order};
+    return order;
+  }
+
   getOrders(): Order[] {
     return this.orders;
   }
