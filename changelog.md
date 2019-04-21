@@ -1,5 +1,25 @@
 # Changelog
 
+## Task 5
+* Add local storage to work with cart.
+* Add login component and protect admin area.
+* Add manage order component layout and functionality.
+* Add manage orders component layout.
+* Add layout and functionality to the manage product component.
+* Add empty manage product component.
+* Add layout to the ManageProducts component and delete functionality.
+* Add admin tabs. Add links from the app component to the admin page.
+* Add admin empty modules and components.
+* In orders add checkout and cancel functionality.
+* Add orders template. Create links. Fill in initial form.
+* Add order form component and order service.
+* Add confirmation to dialog to the empty cart action.
+* Update cart list layout.
+* Update cart item component layout.
+* Add feedbacks module and its components. Use feedbacks on product details component.
+* Add product details component.
+* Apply panel markup to the product component. Add to cart is possible from the product component.
+
 ## Task 4
 * Add sorting to the cart list.
 * Add OrderByPipe.
