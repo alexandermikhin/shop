@@ -66,7 +66,9 @@
         <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
           Create order
         </button>
-        <button type="button" class="btn btn-warning">Cancel order</button>
+        <button type="button" class="btn btn-warning" (click)="cancelOrder()">
+          Cancel order
+        </button>
         <button class="btn" type="button" routerLink="/cart">
           Back to cart
         </button>
