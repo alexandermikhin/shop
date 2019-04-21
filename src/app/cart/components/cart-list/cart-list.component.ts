@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { DialogService } from 'src/app/core/services/dialog.service';
 import { SortOption } from 'src/app/shared/pipes/order-by.pipe';
 import { CartItem } from '../../models/cart-item.model';
 import { CartService } from '../../services/cart.service';
@@ -18,14 +19,17 @@ export class CartListComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private service: CartService) {
+  constructor(
+    private cartService: CartService,
+    private dialogService: DialogService
+  ) {
     this.initSubscription();
   }
 
   ngOnInit() {
-    this.totalCount = this.service.cartCount;
-    this.totalSum = this.service.cartSum;
-    this.items = this.service.getItems();
+    this.totalCount = this.cartService.cartCount;
+    this.totalSum = this.cartService.cartSum;
+    this.items = this.cartService.getItems();
   }
 
   ngOnDestroy() {
@@ -33,28 +37,32 @@ export class CartListComponent implements OnInit, OnDestroy {
   }
 
   emptyCart() {
-    this.service.emptyCart();
+    this.dialogService.confirm('Should empty cart?').then(result => {
+      if (result) {
+        this.cartService.emptyCart();
+      }
+    });
   }
 
   removeItem(item: CartItem) {
-    this.service.removeItem(item);
+    this.cartService.removeItem(item);
   }
 
   changeQuantity(item: CartItem) {
-    this.service.updateCartItem(item);
+    this.cartService.updateCartItem(item);
   }
 
   private initSubscription() {
     this.subscription.add(
-      this.service.itemsChanged.subscribe(items => (this.items = items))
+      this.cartService.itemsChanged.subscribe(items => (this.items = items))
     );
 
     this.subscription.add(
-      this.service.cartSumChanged.subscribe(sum => (this.totalSum = sum))
+      this.cartService.cartSumChanged.subscribe(sum => (this.totalSum = sum))
     );
 
     this.subscription.add(
-      this.service.cartCountChanged.subscribe(
+      this.cartService.cartCountChanged.subscribe(
         count => (this.totalCount = count)
       )
     );
