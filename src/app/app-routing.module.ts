@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'cart', component: CartListComponent },
   { path: 'order', component: OrderFormComponent },
   { path: 'contact-us', component: ContactUsComponent },
+  { path: 'admin', loadChildren: './admin/admin.module#AdminModule' },
   { path: '', redirectTo: '/products-list', pathMatch: 'full' }
 ];
 
