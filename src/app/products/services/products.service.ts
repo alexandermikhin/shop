@@ -9,10 +9,7 @@ const products: ProductModel[] = [
     isAvailable: true,
     name: 'product-1-name',
     price: 100.123,
-    suppliers: [
-      'supplier-1',
-      'supplier-2'
-    ],
+    suppliers: ['supplier-1', 'supplier-2'],
     updateDate: new Date(2019, 0, 1)
   },
   {
@@ -22,10 +19,7 @@ const products: ProductModel[] = [
     isAvailable: false,
     name: 'product-2-name',
     price: 200.1,
-    suppliers: [
-      'supplier-3',
-      'supplier-1'
-    ],
+    suppliers: ['supplier-3', 'supplier-1'],
     updateDate: new Date(2018, 11, 1)
   },
   {
@@ -35,10 +29,7 @@ const products: ProductModel[] = [
     isAvailable: true,
     name: 'product-3-name',
     price: 300.0,
-    suppliers: [
-      'supplier-1',
-      'supplier-4'
-    ],
+    suppliers: ['supplier-1', 'supplier-4'],
     updateDate: new Date(2018, 10, 30)
   },
   {
@@ -48,10 +39,7 @@ const products: ProductModel[] = [
     isAvailable: true,
     name: 'product-4-name',
     price: 300.009,
-    suppliers: [
-      'supplier-1',
-      'supplier-4'
-    ],
+    suppliers: ['supplier-1', 'supplier-4'],
     updateDate: new Date(2019, 3, 10)
   }
 ];
@@ -60,9 +48,6 @@ const products: ProductModel[] = [
   providedIn: 'root'
 })
 export class ProductsService {
-
-  constructor() { }
-
   getProducts(): Promise<ProductModel[]> {
     return new Promise(resolve => {
       setTimeout(() => resolve(products), 0);
@@ -75,6 +60,35 @@ export class ProductsService {
         const product = products.find(p => p.id === id);
         resolve(product);
       }, 0);
+    });
+  }
+
+  editProduct(product: ProductModel): Promise<ProductModel> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const productIndex = products.findIndex(p => p.id === product.id);
+        if (productIndex > -1) {
+          products[productIndex] = { ...product };
+          resolve(product);
+        } else {
+          reject('Product to edit was not found');
+        }
+      });
+    });
+  }
+
+  deleteProduct(id: number): Promise<ProductModel> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const productIndex = products.findIndex(p => p.id === id);
+        if (productIndex > -1) {
+          const product = products[productIndex];
+          products.splice(productIndex, 1);
+          resolve(product);
+        } else {
+          reject('Product to delete was not found');
+        }
+      });
     });
   }
 }

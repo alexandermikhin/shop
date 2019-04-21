@@ -1,3 +1,26 @@
-<p>
-  manage-products works!
-</p>
+<button class="btn btn-primary">Add product</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Available</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.name }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.description }}</td>
+      <td>{{ product.category }}</td>
+      <td>{{ product.isAvailable }}</td>
+      <td>
+        <button class="btn btn-sm" (click)="onEdit(product)">Edit</button>
+        <button class="btn btn-sm btn-danger" (click)="onDelete(product)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
