@@ -10,26 +10,27 @@ import { OrderService } from 'src/app/orders/services/order.service';
 
 @Component({
   selector: 'app-manage-order',
-  templateUrl: './manage-order.component.html',
+  templateUrl: './manage-order.component.html'
 })
-export class ManageOrderComponent implements OnInit, OnDestroy, CanComponentDeactivate {
+export class ManageOrderComponent
+  implements OnInit, OnDestroy, CanComponentDeactivate {
   order: Order;
   originalOrder: Order;
   private sub: Subscription;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private location: Location,
     private router: Router,
     private dialogService: DialogService,
-    private orderService: OrderService) { }
+    private orderService: OrderService
+  ) {}
 
   ngOnInit() {
-    this.route.data
-      .pipe(pluck('order'))
-      .subscribe((order: Order) => {
-        this.order = { ...order };
-        this.originalOrder = { ...order };
-      });
+    this.route.data.pipe(pluck('order')).subscribe((order: Order) => {
+      this.order = { ...order };
+      this.originalOrder = { ...order };
+    });
   }
 
   ngOnDestroy() {
@@ -60,7 +61,6 @@ export class ManageOrderComponent implements OnInit, OnDestroy, CanComponentDeac
     let savedOrder: Order;
     savedOrder = this.orderService.editOrder(order);
 
-
     this.originalOrder = { ...savedOrder };
     this.order = { ...savedOrder };
     this.onGoBack();
@@ -69,5 +69,4 @@ export class ManageOrderComponent implements OnInit, OnDestroy, CanComponentDeac
   onGoBack() {
     this.location.back();
   }
-
 }
