@@ -1,21 +1,25 @@
 <table class="table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Name</th>
-        <th>Delivery address</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let order of orders">
-        <td>{{ order.date }}</td>
-        <td>{{ order.name }}</td>
-        <td>{{ order.deliveryAddress }}</td>
-        <td>
-          <button class="btn btn-sm" [routerLink]="['../order/edit', order.id]">Edit</button>
-          <button class="btn btn-sm btn-danger" (click)="onDelete(order)">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Delivery address</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of (orders$ | async)">
+      <td>{{ order.date }}</td>
+      <td>{{ order.name }}</td>
+      <td>{{ order.deliveryAddress }}</td>
+      <td>
+        <button class="btn btn-sm" [routerLink]="['../order/edit', order.id]">
+          Edit
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="onDelete(order)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Order } from 'src/app/orders/models/order.model';
 import { OrderService } from 'src/app/orders/services/order.service';
 
 @Component({
   selector: 'app-manage-orders',
-  templateUrl: './manage-orders.component.html',
+  templateUrl: './manage-orders.component.html'
 })
 export class ManageOrdersComponent implements OnInit {
+  orders$: Observable<Order[]>;
 
-  orders: Order[];
-
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService) {}
 
   ngOnInit() {
     this.initOrders();
@@ -22,6 +22,6 @@ export class ManageOrdersComponent implements OnInit {
   }
 
   private initOrders() {
-    this.orders = this.orderService.getOrders();
+    this.orders$ = this.orderService.getOrders();
   }
 }

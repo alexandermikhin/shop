@@ -1,11 +1,15 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Order } from '../models/order.model';
 
 @Injectable()
 export class OrderService {
   private orders: Order[] = [];
+  private readonly url = `http://localhost:3000/orders`;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   addOrder(order: Order): Order {
     const id =
@@ -28,12 +32,12 @@ export class OrderService {
       throw new Error('No order found');
     }
 
-    this.orders[index] = {...order};
+    this.orders[index] = { ...order };
     return order;
   }
 
-  getOrders(): Order[] {
-    return this.orders;
+  getOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(this.url).pipe(catchError(this.handleError));
   }
 
   getOrder(id: number): Order | undefined {
@@ -49,5 +53,23 @@ export class OrderService {
     } else {
       return null;
     }
+  }
+
+  private handleError(err: HttpErrorResponse) {
+    let errorMessage: string;
+
+    // A client-side or network error occurred.
+    if (err.error instanceof Error) {
+      errorMessage = `An error occurred: ${err.error.message}`;
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      errorMessage = `Backend returned code ${err.status}, body was: ${
+        err.error
+      }`;
+    }
+
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 }
