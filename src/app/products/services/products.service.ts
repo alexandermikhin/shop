@@ -1,109 +1,89 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ProductModel } from '../models/product.model';
-
-const products: ProductModel[] = [
-  {
-    id: 1,
-    category: 'category-1',
-    description: 'product-1-description',
-    isAvailable: true,
-    name: 'product-1-name',
-    price: 100.123,
-    suppliers: ['supplier-1', 'supplier-2'],
-    updateDate: new Date(2019, 0, 1)
-  },
-  {
-    id: 2,
-    category: 'category-2',
-    description: 'product-2-description',
-    isAvailable: false,
-    name: 'product-2-name',
-    price: 200.1,
-    suppliers: ['supplier-3', 'supplier-1'],
-    updateDate: new Date(2018, 11, 1)
-  },
-  {
-    id: 3,
-    category: 'category-3',
-    description: 'product-3-description',
-    isAvailable: true,
-    name: 'product-3-name',
-    price: 300.0,
-    suppliers: ['supplier-1', 'supplier-4'],
-    updateDate: new Date(2018, 10, 30)
-  },
-  {
-    id: 4,
-    category: 'category-3',
-    description: 'product-4-description',
-    isAvailable: true,
-    name: 'product-4-name',
-    price: 300.009,
-    suppliers: ['supplier-1', 'supplier-4'],
-    updateDate: new Date(2019, 3, 10)
-  }
-];
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
+  private readonly url = `http://localhost:3000/products`;
+
+  constructor(private http: HttpClient) {}
+
   getProducts(): Promise<ProductModel[]> {
-    return new Promise(resolve => {
-      setTimeout(() => resolve(products), 0);
-    });
+    return this.http
+      .get<ProductModel[]>(this.url)
+      .toPromise()
+      .catch(this.handleError);
   }
 
   getProduct(id: number): Promise<ProductModel> {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        const product = products.find(p => p.id === id);
-        resolve(product);
-      }, 0);
-    });
+    return this.http
+      .get<ProductModel>(this.url + '/' + id)
+      .toPromise()
+      .catch(this.handleError);
   }
 
-  addProduct(product: ProductModel): Promise<ProductModel> {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        const id = products
-          .map(p => p.id)
-          .reduce((prev, cur) => {
-            return prev < cur ? cur : prev;
-          });
-        const savedProduct = { ...product, id: id + 1, updateDate: new Date() };
-        products.push(savedProduct);
-        resolve(savedProduct);
-      });
-    });
+  async addProduct(product: ProductModel): Promise<ProductModel> {
+    const products = await this.getProducts();
+    const maxId = products
+      .map(p => p.id)
+      .reduce((prev, cur) => (prev < cur ? cur : prev));
+
+    const productToAdd = {
+      ...product,
+      id: maxId + 1,
+      updateDate: this.getUpdateDate()
+    };
+
+    const body = this.getRequestBody(productToAdd);
+    const options = this.getRequestOptions();
+
+    return this.http
+      .post<ProductModel>(this.url, body, options)
+      .toPromise()
+      .catch(this.handleError);
   }
 
   editProduct(product: ProductModel): Promise<ProductModel> {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const productIndex = products.findIndex(p => p.id === product.id);
-        if (productIndex > -1) {
-          products[productIndex] = { ...product, updateDate: new Date() };
-          resolve(product);
-        } else {
-          reject('Product to edit was not found');
-        }
-      });
-    });
+    const updateUrl = `${this.url}/${product.id}`;
+    const productToUpdate = {
+      ...product,
+      updateDate: this.getUpdateDate()
+    };
+    const body = this.getRequestBody(productToUpdate);
+    const options = this.getRequestOptions();
+
+    return this.http
+      .put<ProductModel>(updateUrl, body, options)
+      .toPromise()
+      .catch(this.handleError);
   }
 
-  deleteProduct(id: number): Promise<ProductModel> {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const productIndex = products.findIndex(p => p.id === id);
-        if (productIndex > -1) {
-          const product = products[productIndex];
-          products.splice(productIndex, 1);
-          resolve(product);
-        } else {
-          reject('Product to delete was not found');
-        }
-      });
-    });
+  deleteProduct(id: number): Promise<{}> {
+    const deleteUrl = `${this.url}/${id}`;
+    return this.http
+      .delete<{}>(deleteUrl)
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  private getRequestOptions(): { [option: string]: any } {
+    return {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+  }
+
+  private handleError(error: { message?: string }): Promise<any> {
+    console.error('An error occured', error);
+    return Promise.reject(error.message || error);
+  }
+
+  private getRequestBody(model: any): any {
+    return JSON.stringify(model);
+  }
+
+  private getUpdateDate(): string {
+    return new Date().toISOString();
   }
 }

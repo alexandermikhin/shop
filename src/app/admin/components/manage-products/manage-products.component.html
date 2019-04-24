@@ -18,7 +18,7 @@
       <td>{{ product.description }}</td>
       <td>{{ product.category }}</td>
       <td>{{ product.isAvailable }}</td>
-      <td>{{ product.updateDate }}</td>
+      <td>{{ product.updateDate | date: 'short' }}</td>
       <td>
         <button class="btn btn-sm" [routerLink]="['../product/edit', product.id]">Edit</button>
         <button class="btn btn-sm btn-danger" (click)="onDelete(product)">Delete</button>

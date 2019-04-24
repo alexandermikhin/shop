@@ -1,12 +1,10 @@
-import { Product } from './product';
-
-export class ProductModel implements Product {
+export class ProductModel {
   id: number;
   name: string;
   description: string;
   price: number;
   category: string;
   isAvailable: boolean;
-  updateDate: Date;
+  updateDate: string;
   suppliers: string[];
 }
