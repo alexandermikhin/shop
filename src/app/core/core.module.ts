@@ -6,6 +6,7 @@ import { GeneratorService } from './services/generator.service';
 import { constantsService } from './models/constants';
 import { AppSettingsService } from './services/app-settings.service';
 import { LocalStorageService } from './services/local-storage.service';
+import { AppSettings$, appSettingsFactory } from './services/app-settings-factory';
 
 
 @NgModule({
@@ -19,6 +20,11 @@ import { LocalStorageService } from './services/local-storage.service';
       provide: Generator15,
       useFactory: generatorFactory(15),
       deps: [GeneratorService]
+    },
+    {
+      provide: AppSettings$,
+      useFactory: appSettingsFactory(),
+      deps: [AppSettingsService]
     }
   ],
   imports: [CommonModule]

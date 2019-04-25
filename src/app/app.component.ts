@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AppSettingsService } from './core/services/app-settings.service';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { AppSettings } from './core/models/app-settings';
-import { Subscription } from 'rxjs';
+import { AppSettings$ } from './core/services/app-settings-factory';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +11,12 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   settings: AppSettings;
   private settingsSub: Subscription;
-  constructor(private appSettingsService: AppSettingsService) {
-
-  }
+  constructor(
+    @Inject(AppSettings$) private appSettings$: Observable<AppSettings>
+  ) {}
 
   ngOnInit() {
-    this.settingsSub = this.appSettingsService.loadSettings().subscribe(s => this.settings = s);
+    this.settingsSub = this.appSettings$.subscribe(s => (this.settings = s));
   }
 
   ngOnDestroy() {
