@@ -114,5 +114,8 @@
       "name": "111",
       "deliveryAddress": "222333"
     }
-  ]
+  ],
+  "settings": {
+    "color": "yellow"
+  }
 }
