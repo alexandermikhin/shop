@@ -7,6 +7,7 @@ import { constantsService } from './models/constants';
 import { AppSettingsService } from './services/app-settings.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { AppSettings$, appSettingsFactory } from './services/app-settings-factory';
+import { JsonServerClientService } from './services/json-server-client.service';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { AppSettings$, appSettingsFactory } from './services/app-settings-factor
     AppSettingsService,
     GeneratorService,
     LocalStorageService,
+    JsonServerClientService,
     { provide: ConstantsService, useValue: constantsService},
     {
       provide: Generator15,

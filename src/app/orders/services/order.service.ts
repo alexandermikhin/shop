@@ -1,18 +1,15 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders
-} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, concatMap } from 'rxjs/operators';
+import { JsonServerClientService } from 'src/app/core/services/json-server-client.service';
 import { Order } from '../models/order.model';
 
 @Injectable()
 export class OrderService {
-  private readonly url = `http://localhost:3000/orders`;
+  private readonly endpoint = `orders`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private jsonServerClient: JsonServerClientService) {}
 
   addOrder(order: Order): Observable<Order> {
     return this.getOrders().pipe(
@@ -24,36 +21,34 @@ export class OrderService {
           ...order,
           id: maxId + 1
         };
-        const body = this.getRequestBody(orderToAdd);
-        const options = this.getRequestOptions();
-        return this.http
-          .post<Order>(this.url, body, options)
+
+        return this.jsonServerClient
+          .post<Order>(this.endpoint, orderToAdd)
           .pipe(catchError(this.handleError));
       })
     );
   }
 
   editOrder(order: Order): Observable<Order> {
-    const updateUrl = `${this.url}/${order.id}`;
-    const body = this.getRequestBody(order);
-    const options = this.getRequestOptions();
-    return this.http
-      .put<Order>(updateUrl, body, options)
+    const updateUrl = `${this.endpoint}/${order.id}`;
+
+    return this.jsonServerClient
+      .put<Order>(updateUrl, order)
       .pipe(catchError(this.handleError));
   }
 
   getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(this.url).pipe(catchError(this.handleError));
+    return this.jsonServerClient.get<Order[]>(this.endpoint).pipe(catchError(this.handleError));
   }
 
   getOrder(id: number): Observable<Order> {
-    const getUrl = this.url + '/' + id;
-    return this.http.get<Order>(getUrl).pipe(catchError(this.handleError));
+    const getUrl = this.endpoint + '/' + id;
+    return this.jsonServerClient.get<Order>(getUrl).pipe(catchError(this.handleError));
   }
 
   deleteOrder(id: number): Observable<{}> {
-    const deleteUrl = this.url + '/' + id;
-    return this.http.delete<{}>(deleteUrl).pipe(catchError(this.handleError));
+    const deleteUrl = this.endpoint + '/' + id;
+    return this.jsonServerClient.delete(deleteUrl).pipe(catchError(this.handleError));
   }
 
   private handleError(err: HttpErrorResponse) {
@@ -72,15 +67,5 @@ export class OrderService {
 
     console.error(errorMessage);
     return throwError(errorMessage);
-  }
-
-  private getRequestOptions(): { [option: string]: any } {
-    return {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
-  }
-
-  private getRequestBody(model: any): any {
-    return JSON.stringify(model);
   }
 }

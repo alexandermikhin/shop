@@ -1,25 +1,25 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JsonServerClientService } from 'src/app/core/services/json-server-client.service';
 import { ProductModel } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
-  private readonly url = `http://localhost:3000/products`;
+  private readonly endpoint = `products`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private jsonServerClient: JsonServerClientService) {}
 
   getProducts(): Promise<ProductModel[]> {
-    return this.http
-      .get<ProductModel[]>(this.url)
+    return this.jsonServerClient
+      .get<ProductModel[]>(this.endpoint)
       .toPromise()
       .catch(this.handleError);
   }
 
   getProduct(id: number): Promise<ProductModel> {
-    return this.http
-      .get<ProductModel>(this.url + '/' + id)
+    return this.jsonServerClient
+      .get<ProductModel>(this.endpoint + '/' + id)
       .toPromise()
       .catch(this.handleError);
   }
@@ -36,51 +36,36 @@ export class ProductsService {
       updateDate: this.getUpdateDate()
     };
 
-    const body = this.getRequestBody(productToAdd);
-    const options = this.getRequestOptions();
-
-    return this.http
-      .post<ProductModel>(this.url, body, options)
+    return this.jsonServerClient
+      .post<ProductModel>(this.endpoint, productToAdd)
       .toPromise()
       .catch(this.handleError);
   }
 
   editProduct(product: ProductModel): Promise<ProductModel> {
-    const updateUrl = `${this.url}/${product.id}`;
+    const updateUrl = `${this.endpoint}/${product.id}`;
     const productToUpdate = {
       ...product,
       updateDate: this.getUpdateDate()
     };
-    const body = this.getRequestBody(productToUpdate);
-    const options = this.getRequestOptions();
 
-    return this.http
-      .put<ProductModel>(updateUrl, body, options)
+    return this.jsonServerClient
+      .put<ProductModel>(updateUrl, productToUpdate)
       .toPromise()
       .catch(this.handleError);
   }
 
   deleteProduct(id: number): Promise<{}> {
-    const deleteUrl = `${this.url}/${id}`;
-    return this.http
-      .delete<{}>(deleteUrl)
+    const deleteUrl = `${this.endpoint}/${id}`;
+    return this.jsonServerClient
+      .delete(deleteUrl)
       .toPromise()
       .catch(this.handleError);
-  }
-
-  private getRequestOptions(): { [option: string]: any } {
-    return {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
   }
 
   private handleError(error: { message?: string }): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);
-  }
-
-  private getRequestBody(model: any): any {
-    return JSON.stringify(model);
   }
 
   private getUpdateDate(): string {
