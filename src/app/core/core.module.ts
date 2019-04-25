@@ -8,6 +8,7 @@ import { AppSettingsService } from './services/app-settings.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { AppSettings$, appSettingsFactory } from './services/app-settings-factory';
 import { JsonServerClientService } from './services/json-server-client.service';
+import { JsonServerApiProvider } from './services/json-server.config';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { JsonServerClientService } from './services/json-server-client.service';
     GeneratorService,
     LocalStorageService,
     JsonServerClientService,
+    JsonServerApiProvider,
     { provide: ConstantsService, useValue: constantsService},
     {
       provide: Generator15,

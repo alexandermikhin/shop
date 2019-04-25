@@ -1,11 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { JsonServerApi } from './json-server.config';
 
 @Injectable()
 export class JsonServerClientService {
-  private readonly url = 'http://localhost:3000/';
-  constructor(private http: HttpClient) {}
+  constructor(
+    @Inject(JsonServerApi) private readonly url: string,
+    private http: HttpClient
+  ) {}
 
   get<T>(endpoint: string): Observable<T> {
     return this.http.get<T>(this.url + endpoint);
