@@ -8,12 +8,11 @@ const routes: Routes = [
   { path: 'products-list', component: ProductListComponent },
   {
     path: 'product/:productID',
-    component: ProductDetailsComponent
-    /* children: [
+    component: ProductDetailsComponent,
+    children: [
       { path: 'feedback', component: FeedbacksComponent, outlet: 'feedback' }
-    ] */
-  },
-  { path: 'feedback', component: FeedbacksComponent, outlet: 'feedback' }
+    ]
+  }
 ];
 
 @NgModule({
