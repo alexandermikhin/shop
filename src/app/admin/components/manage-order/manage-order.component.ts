@@ -58,12 +58,11 @@ export class ManageOrderComponent
 
   onSave() {
     const order = { ...this.order };
-    let savedOrder: Order;
-    savedOrder = this.orderService.editOrder(order);
-
-    this.originalOrder = { ...savedOrder };
-    this.order = { ...savedOrder };
-    this.onGoBack();
+    this.sub = this.orderService.editOrder(order).subscribe(o => {
+      this.originalOrder = { ...o };
+      this.order = { ...o };
+      this.onGoBack();
+    });
   }
 
   onGoBack() {

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { Order } from 'src/app/orders/models/order.model';
 import { OrderService } from 'src/app/orders/services/order.service';
 
@@ -7,8 +7,10 @@ import { OrderService } from 'src/app/orders/services/order.service';
   selector: 'app-manage-orders',
   templateUrl: './manage-orders.component.html'
 })
-export class ManageOrdersComponent implements OnInit {
+export class ManageOrdersComponent implements OnInit, OnDestroy {
   orders$: Observable<Order[]>;
+
+  private deleteSub: Subscription;
 
   constructor(private orderService: OrderService) {}
 
@@ -16,9 +18,16 @@ export class ManageOrdersComponent implements OnInit {
     this.initOrders();
   }
 
+  ngOnDestroy() {
+    if (this.deleteSub) {
+      this.deleteSub.unsubscribe();
+    }
+  }
+
   onDelete(order: Order) {
-    this.orderService.deleteOrder(order.id);
-    this.initOrders();
+    this.deleteSub = this.orderService
+      .deleteOrder(order.id)
+      .subscribe(() => this.initOrders());
   }
 
   private initOrders() {

@@ -9,7 +9,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let order of (orders$ | async)">
-      <td>{{ order.date }}</td>
+      <td>{{ order.date | date: 'short' }}</td>
       <td>{{ order.name }}</td>
       <td>{{ order.deliveryAddress }}</td>
       <td>

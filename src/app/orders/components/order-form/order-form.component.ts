@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { Order } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order-form',
   templateUrl: './order-form.component.html'
 })
-export class OrderFormComponent implements OnInit {
+export class OrderFormComponent implements OnInit, OnDestroy {
   order: Order;
   totalSum: number;
+  private addOrderSub: Subscription;
 
   constructor(
     private cartService: CartService,
@@ -27,7 +29,7 @@ export class OrderFormComponent implements OnInit {
     this.order = {
       id: 0,
       cartItems,
-      date: new Date(),
+      date: new Date().toISOString(),
       name: '',
       deliveryAddress: ''
     };
@@ -35,11 +37,18 @@ export class OrderFormComponent implements OnInit {
     this.totalSum = this.cartService.cartSum;
   }
 
+  ngOnDestroy() {
+    if (this.addOrderSub) {
+      this.addOrderSub.unsubscribe();
+    }
+  }
+
   onProcessOrder() {
     console.log('Process order');
-    this.orderService.addOrder(this.order);
-    this.cartService.emptyCart();
-    this.router.navigate(['/products-list']);
+    this.addOrderSub = this.orderService.addOrder(this.order).subscribe(() => {
+      this.cartService.emptyCart();
+      this.router.navigate(['/products-list']);
+    });
   }
 
   async cancelOrder() {

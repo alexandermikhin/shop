@@ -4,27 +4,14 @@
       "id": 1,
       "category": "category-1",
       "description": "product-1-description",
-      "isAvailable": false,
+      "isAvailable": true,
       "name": "product-1-name",
       "price": "100.1234",
       "suppliers": [
         "supplier-1",
         "supplier-2"
       ],
-      "updateDate": "2019-04-24T14:56:36.455Z"
-    },
-    {
-      "id": 2,
-      "category": "category-2",
-      "description": "product-2-description",
-      "isAvailable": false,
-      "name": "product-2-name",
-      "price": 200.1,
-      "suppliers": [
-        "supplier-3",
-        "supplier-1"
-      ],
-      "updateDate": "2018-12-01"
+      "updateDate": "2019-04-25T02:40:13.932Z"
     },
     {
       "id": 3,
@@ -69,7 +56,63 @@
       "isAvailable": true,
       "id": 7,
       "updateDate": "2019-04-24T14:48:14.444Z"
+    },
+    {
+      "name": "333",
+      "price": "333",
+      "description": "333",
+      "category": "333",
+      "isAvailable": true,
+      "id": 8,
+      "updateDate": "2019-04-25T02:40:37.786Z"
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "id": 2,
+      "cartItems": [],
+      "date": "2019-04-06",
+      "name": "Name-1",
+      "deliveryAddress": "address 22"
+    },
+    {
+      "id": 3,
+      "cartItems": [
+        {
+          "name": "product-1-name",
+          "price": "100.1234",
+          "quantity": 1
+        }
+      ],
+      "date": "2019-04-25T06:58:05.725Z",
+      "name": "111222",
+      "deliveryAddress": "111"
+    },
+    {
+      "id": 4,
+      "cartItems": [
+        {
+          "name": "product-1-name",
+          "price": "100.1234",
+          "quantity": 1
+        }
+      ],
+      "date": "2019-04-25T07:00:05.280Z",
+      "name": "222",
+      "deliveryAddress": "222"
+    },
+    {
+      "id": 5,
+      "cartItems": [
+        {
+          "name": "product-1-name",
+          "price": "100.1234",
+          "quantity": 1
+        }
+      ],
+      "date": "2019-04-25T07:00:33.943Z",
+      "name": "111",
+      "deliveryAddress": "222333"
+    }
+  ]
 }

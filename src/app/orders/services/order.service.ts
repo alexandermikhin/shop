@@ -1,58 +1,59 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, concatMap } from 'rxjs/operators';
 import { Order } from '../models/order.model';
 
 @Injectable()
 export class OrderService {
-  private orders: Order[] = [];
   private readonly url = `http://localhost:3000/orders`;
 
   constructor(private http: HttpClient) {}
 
-  addOrder(order: Order): Order {
-    const id =
-      this.orders.length > 0
-        ? this.orders
-            .map(p => p.id)
-            .reduce((prev, cur) => {
-              return prev < cur ? cur : prev;
-            })
-        : 0;
-    const savedOrder = { ...order, id: id + 1 };
-    this.orders.push(savedOrder);
-    console.log(this.orders);
-    return savedOrder;
+  addOrder(order: Order): Observable<Order> {
+    return this.getOrders().pipe(
+      concatMap(orders => {
+        const maxId = orders
+          .map(o => o.id)
+          .reduce((prev, cur) => Math.max(prev, cur));
+        const orderToAdd: Order = {
+          ...order,
+          id: maxId + 1
+        };
+        const body = this.getRequestBody(orderToAdd);
+        const options = this.getRequestOptions();
+        return this.http
+          .post<Order>(this.url, body, options)
+          .pipe(catchError(this.handleError));
+      })
+    );
   }
 
-  editOrder(order: Order): Order {
-    const index = this.orders.findIndex(o => o.id === order.id);
-    if (index === -1) {
-      throw new Error('No order found');
-    }
-
-    this.orders[index] = { ...order };
-    return order;
+  editOrder(order: Order): Observable<Order> {
+    const updateUrl = `${this.url}/${order.id}`;
+    const body = this.getRequestBody(order);
+    const options = this.getRequestOptions();
+    return this.http
+      .put<Order>(updateUrl, body, options)
+      .pipe(catchError(this.handleError));
   }
 
   getOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(this.url).pipe(catchError(this.handleError));
   }
 
-  getOrder(id: number): Order | undefined {
-    return this.orders.find(o => o.id === id);
+  getOrder(id: number): Observable<Order> {
+    const getUrl = this.url + '/' + id;
+    return this.http.get<Order>(getUrl).pipe(catchError(this.handleError));
   }
 
-  deleteOrder(id: number): Order | null {
-    const orderIndex = this.orders.findIndex(o => o.id === id);
-    if (orderIndex > -1) {
-      const order = this.orders[orderIndex];
-      this.orders.splice(orderIndex, 1);
-      return order;
-    } else {
-      return null;
-    }
+  deleteOrder(id: number): Observable<{}> {
+    const deleteUrl = this.url + '/' + id;
+    return this.http.delete<{}>(deleteUrl).pipe(catchError(this.handleError));
   }
 
   private handleError(err: HttpErrorResponse) {
@@ -71,5 +72,15 @@ export class OrderService {
 
     console.error(errorMessage);
     return throwError(errorMessage);
+  }
+
+  private getRequestOptions(): { [option: string]: any } {
+    return {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+  }
+
+  private getRequestBody(model: any): any {
+    return JSON.stringify(model);
   }
 }
