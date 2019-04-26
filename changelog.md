@@ -1,5 +1,14 @@
 # Changelog
 
+## Task 6
+* Fix showing of feedbacks for product details.
+* Use AppSettings service to load service either from local storage, server or set default.
+* Add timing interceptor for orders requests.
+* Use http client to manage orders. Convert methods in OrderService to use Observable.
+* Get orders by http request.
+* Convert ProductsService to use http client.
+* Add JSON server and HttpClientModule to the AppModule.
+
 ## Task 5
 * Add local storage to work with cart.
 * Add login component and protect admin area.
