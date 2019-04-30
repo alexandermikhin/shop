@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { ProductModel } from '../../models/product.model';
 import { ProductsService } from '../../services/products.service';
 import { Router } from '@angular/router';
+import { AppState } from 'src/app/core/state/app.state';
+import { Store, select } from '@ngrx/store';
+import { ProductsState } from 'src/app/core/state/products/products.state';
 
 @Component({
   templateUrl: './product-list.component.html',
@@ -13,21 +16,24 @@ export class ProductListComponent implements OnInit, OnDestroy {
   products: Promise<ProductModel[]>;
   cartSum: number;
   isLoading = true;
+  productsState$: Observable<ProductsState>;
 
   private subscription = new Subscription();
 
   constructor(
     private router: Router,
     private productsService: ProductsService,
-    private cartService: CartService
+    private cartService: CartService,
+    private store: Store<AppState>
   ) {
     this.initSubscription();
   }
 
   ngOnInit() {
     this.cartSum = this.cartService.cartSum;
-    this.products = this.productsService.getProducts();
-    this.products.finally(() => (this.isLoading = false));
+    this.productsState$ = this.store.pipe(select('products'));
+    // this.products = this.productsService.getProducts();
+    // this.products.finally(() => (this.isLoading = false));
   }
 
   ngOnDestroy() {
