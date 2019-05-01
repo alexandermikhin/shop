@@ -28,7 +28,7 @@ export class EditProduct implements Action {
 
 export class DeleteProduct implements Action {
   type = DELETE_PRODUCT;
-  constructor(public paload: number) {}
+  constructor(public payload: number) {}
 }
 
 export type ProductsActions =
