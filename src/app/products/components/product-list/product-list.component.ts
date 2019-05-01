@@ -4,9 +4,9 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { AppState } from 'src/app/core/state/app.state';
+import * as act from 'src/app/core/state/products/products.actions';
 import { ProductsState } from 'src/app/core/state/products/products.state';
 import { ProductModel } from '../../models/product.model';
-import { ProductsService } from '../../services/products.service';
 
 @Component({
   templateUrl: './product-list.component.html',
@@ -21,7 +21,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private productsService: ProductsService,
     private cartService: CartService,
     private store: Store<AppState>
   ) {
@@ -31,6 +30,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.cartSum = this.cartService.cartSum;
     this.productsState$ = this.store.pipe(select('products'));
+    this.store.dispatch(new act.GetProducts());
   }
 
   ngOnDestroy() {

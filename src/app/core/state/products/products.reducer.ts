@@ -7,7 +7,24 @@ export function productsReducer(
 ): ProductsState {
   switch (action.type) {
     case act.GET_PRODUCTS: {
-      return { ...state };
+      return { ...state, loading: true };
+    }
+    case act.GET_PRODUCTS_SUCCESS: {
+      const data = [...(action as act.GetProductsSuccess).payload];
+      return {
+        ...state,
+        data,
+        loading: false,
+        loaded: true
+      };
+    }
+    case act.GET_PRODUCTS_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: (action as act.GetProductsError).payload
+      }
     }
     case act.ADD_PRODUCT: {
       const addItem = (action as act.AddProduct).payload;

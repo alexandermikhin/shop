@@ -1,5 +1,5 @@
 <h2>Products list</h2>
-<div *ngIf="isLoading; else productsList">Loading...</div>
+<div *ngIf="(productsState$ | async).loading; else productsList">Loading...</div>
 <div *ngFor="let product of (productsState$ | async).data" #productsList>
   <app-product [product]="product" (addToCart)="onBuy($event)"
   (seeDetails)="onSeeDetails($event)"></app-product>
