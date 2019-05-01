@@ -23,4 +23,15 @@ export class ProductsEffects {
         .catch(err => new act.GetProductsError(err))
     )
   );
+
+  @Effect()
+  getProduct$: Observable<Action> = this.actions$.pipe(
+    ofType<act.GetProduct>(act.GET_PRODUCT),
+    switchMap(action =>
+      this.productsService
+        .getProduct(action.payload)
+        .then(product => new act.GetProductSuccess(product))
+        .catch(err => new act.GetProductError(err))
+    )
+  );
 }

@@ -24,7 +24,29 @@ export function productsReducer(
         loading: false,
         loaded: false,
         error: (action as act.GetProductsError).payload
-      }
+      };
+    }
+    case act.GET_PRODUCT: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
+    case act.GET_PRODUCT_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        selectedProduct: (action as act.GetProductSuccess).payload
+      };
+    }
+    case act.GET_PRODUCT_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: (action as act.GetProductError).payload
+      };
     }
     case act.ADD_PRODUCT: {
       const addItem = (action as act.AddProduct).payload;
