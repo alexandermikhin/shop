@@ -6,12 +6,12 @@
       "description": "product-1-description",
       "isAvailable": true,
       "name": "product-1-name",
-      "price": "100.1234",
+      "price": "100.12345",
       "suppliers": [
         "supplier-1",
         "supplier-2"
       ],
-      "updateDate": "2019-04-25T02:40:13.932Z"
+      "updateDate": "2019-05-01T15:22:01.004Z"
     },
     {
       "id": 3,

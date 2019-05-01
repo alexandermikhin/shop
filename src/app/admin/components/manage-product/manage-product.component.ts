@@ -1,12 +1,15 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProductModel } from 'src/app/products/models/product.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DialogService } from 'src/app/core/services/dialog.service';
-import { Subscription } from 'rxjs';
-import { ProductsService } from 'src/app/products/services/products.service';
 import { CanComponentDeactivate } from 'src/app/core/interfaces/can-component-deactivate.interface';
+import { DialogService } from 'src/app/core/services/dialog.service';
+import { AppState } from 'src/app/core/state/app.state';
+import * as act from 'src/app/core/state/products/products.actions';
+import { ProductsState } from 'src/app/core/state/products/products.state';
+import { ProductModel } from 'src/app/products/models/product.model';
 
 @Component({
   selector: 'app-manage-product',
@@ -17,13 +20,13 @@ export class ManageProductComponent
   product: ProductModel;
   originalProduct: ProductModel;
   private sub: Subscription;
+  private productsState$: Observable<ProductsState>;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private router: Router,
     private dialogService: DialogService,
-    private productsService: ProductsService
+    private store: Store<AppState>
   ) {}
 
   ngOnInit() {
@@ -33,6 +36,14 @@ export class ManageProductComponent
         this.product = { ...product };
         this.originalProduct = { ...product };
       });
+
+    this.productsState$ = this.store.pipe(select('products'));
+    this.productsState$.subscribe(state => {
+      if (state.selectedProduct) {
+        this.product = { ...state.selectedProduct };
+        this.originalProduct = { ...state.selectedProduct };
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -58,18 +69,13 @@ export class ManageProductComponent
     return this.dialogService.confirm('Discard changes?');
   }
 
-  async onSaveProduct() {
+  onSaveProduct() {
     const product = { ...this.product };
-    let savedProduct: ProductModel;
     if (product.id) {
-      savedProduct = await this.productsService.editProduct(product);
+      this.store.dispatch(new act.EditProduct(product));
     } else {
-      savedProduct = await this.productsService.addProduct(product);
+      this.store.dispatch(new act.AddProduct(product));
     }
-
-    this.originalProduct = { ...savedProduct };
-    this.product = { ...savedProduct };
-    this.onGoBack();
   }
 
   onGoBack() {

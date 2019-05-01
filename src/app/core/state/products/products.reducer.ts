@@ -54,15 +54,22 @@ export function productsReducer(
       return { ...state, data };
     }
     case act.EDIT_PRODUCT: {
-      const data = state.data.map(item => {
-        const editItem = (action as act.EditProduct).payload;
-        if (item.id === editItem.id) {
-          return editItem;
-        }
-
-        return item;
-      });
-      return { ...state, data };
+      return {
+        ...state,
+      };
+    }
+    case act.EDIT_PRODUCT_SUCCESS: {
+      const product = (action as act.EditProductSuccess).payload;
+      const data = [...state.data];
+      const index = data.findIndex(item => item.id === product.id);
+      data[index] = product;
+      return { ...state, data, selectedProduct: product };
+    }
+    case act.EDIT_PRODUCT_ERROR: {
+      return {
+        ...state,
+        error: (action as act.EditProductError).payload
+      };
     }
     case act.DELETE_PRODUCT: {
       const deleteItemId = (action as act.DeleteProduct).payload;

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { concatMap, switchMap } from 'rxjs/operators';
 import { ProductsService } from 'src/app/products/services/products.service';
 import * as act from './products.actions';
 
@@ -32,6 +32,17 @@ export class ProductsEffects {
         .getProduct(action.payload)
         .then(product => new act.GetProductSuccess(product))
         .catch(err => new act.GetProductError(err))
+    )
+  );
+
+  @Effect()
+  editProduct$: Observable<Action> = this.actions$.pipe(
+    ofType<act.EditProduct>(act.EDIT_PRODUCT),
+    concatMap(action =>
+      this.productsService
+        .editProduct(action.payload)
+        .then(product => new act.EditProductSuccess(product))
+        .catch(err => new act.EditProductError(err))
     )
   );
 }
