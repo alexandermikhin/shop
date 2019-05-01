@@ -30,7 +30,7 @@ export class ManageProductComponent
   ) {}
 
   ngOnInit() {
-    this.route.data
+    this.sub = this.route.data
       .pipe(pluck('product'))
       .subscribe((product: ProductModel) => {
         this.product = { ...product };
@@ -38,12 +38,18 @@ export class ManageProductComponent
       });
 
     this.productsState$ = this.store.pipe(select('products'));
-    this.productsState$.subscribe(state => {
-      if (state.selectedProduct) {
-        this.product = { ...state.selectedProduct };
-        this.originalProduct = { ...state.selectedProduct };
-      }
-    });
+    this.sub.add(
+      this.productsState$.subscribe(state => {
+        if (state.selectedProduct) {
+          this.product = { ...state.selectedProduct };
+          this.originalProduct = { ...state.selectedProduct };
+        }
+
+        if (state.editComplete) {
+          this.onGoBack();
+        }
+      })
+    );
   }
 
   ngOnDestroy() {

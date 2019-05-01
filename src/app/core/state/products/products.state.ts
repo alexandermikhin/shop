@@ -5,6 +5,7 @@ export interface ProductsState {
   selectedProduct: ProductModel;
   loading: boolean;
   loaded: boolean;
+  editComplete: boolean;
   error: Error | string;
 }
 
@@ -13,5 +14,6 @@ export const initialProductsState: ProductsState = {
   selectedProduct: null,
   loading: false,
   loaded: false,
+  editComplete: false,
   error: null
 };

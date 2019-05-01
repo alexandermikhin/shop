@@ -7,7 +7,7 @@ export function productsReducer(
 ): ProductsState {
   switch (action.type) {
     case act.GET_PRODUCTS: {
-      return { ...state, loading: true };
+      return { ...state, loading: true, editComplete: false };
     }
     case act.GET_PRODUCTS_SUCCESS: {
       const data = [...(action as act.GetProductsSuccess).payload];
@@ -29,7 +29,8 @@ export function productsReducer(
     case act.GET_PRODUCT: {
       return {
         ...state,
-        loading: true
+        loading: true,
+        editComplete: false
       };
     }
     case act.GET_PRODUCT_SUCCESS: {
@@ -56,6 +57,7 @@ export function productsReducer(
     case act.EDIT_PRODUCT: {
       return {
         ...state,
+        editComplete: false
       };
     }
     case act.EDIT_PRODUCT_SUCCESS: {
@@ -63,7 +65,7 @@ export function productsReducer(
       const data = [...state.data];
       const index = data.findIndex(item => item.id === product.id);
       data[index] = product;
-      return { ...state, data, selectedProduct: product };
+      return { ...state, data, selectedProduct: product, editComplete: true };
     }
     case act.EDIT_PRODUCT_ERROR: {
       return {
