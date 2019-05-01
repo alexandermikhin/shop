@@ -45,4 +45,15 @@ export class ProductsEffects {
         .catch(err => new act.EditProductError(err))
     )
   );
+
+  @Effect()
+  addProduct$: Observable<Action> = this.actions$.pipe(
+    ofType<act.AddProduct>(act.ADD_PRODUCT),
+    concatMap(action =>
+      this.productsService
+        .addProduct(action.payload)
+        .then(product => new act.AddProductSuccess(product))
+        .catch(err => new act.AddProductError(err))
+    )
+  );
 }

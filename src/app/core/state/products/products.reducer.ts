@@ -7,7 +7,12 @@ export function productsReducer(
 ): ProductsState {
   switch (action.type) {
     case act.GET_PRODUCTS: {
-      return { ...state, loading: true, editComplete: false };
+      return {
+        ...state,
+        loading: true,
+        editComplete: false,
+        selectedProduct: null
+      };
     }
     case act.GET_PRODUCTS_SUCCESS: {
       const data = [...(action as act.GetProductsSuccess).payload];
@@ -50,10 +55,20 @@ export function productsReducer(
       };
     }
     case act.ADD_PRODUCT: {
+      return { ...state, editComplete: false };
+    }
+    case act.ADD_PRODUCT_SUCCESS: {
       const addItem = (action as act.AddProduct).payload;
       const data = [...state.data, addItem];
-      return { ...state, data };
+      return { ...state, data, editComplete: true };
     }
+    case act.ADD_PRODUCT_ERROR: {
+      return {
+        ...state,
+        error: (action as act.AddProductError).payload
+      };
+    }
+
     case act.EDIT_PRODUCT: {
       return {
         ...state,

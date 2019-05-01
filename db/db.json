@@ -11,7 +11,7 @@
         "supplier-1",
         "supplier-2"
       ],
-      "updateDate": "2019-05-01T15:22:01.004Z"
+      "updateDate": "2019-05-01T16:17:53.111Z"
     },
     {
       "id": 3,
@@ -65,6 +65,15 @@
       "isAvailable": true,
       "id": 8,
       "updateDate": "2019-04-25T02:40:37.786Z"
+    },
+    {
+      "name": "555product-1-name",
+      "price": "100.123555",
+      "description": "product-1-description",
+      "category": "333",
+      "isAvailable": true,
+      "id": 9,
+      "updateDate": "2019-05-01T16:37:26.215Z"
     }
   ],
   "orders": [

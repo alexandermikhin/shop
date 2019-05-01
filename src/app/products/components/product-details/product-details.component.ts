@@ -25,11 +25,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.product = new ProductModel();
-
     this.productsState$ = this.store.pipe(select('products'));
     this.sub = this.productsState$.subscribe(
-      state => (this.product = state.selectedProduct)
+      state => (this.product = state.selectedProduct || new ProductModel())
     );
 
     this.activatedRoute.paramMap.subscribe(params => {

@@ -8,6 +8,8 @@ export const GET_PRODUCT = '[Products] - Get product';
 export const GET_PRODUCT_SUCCESS = '[Products] - Get product success';
 export const GET_PRODUCT_ERROR = '[Products] - Get product error';
 export const ADD_PRODUCT = '[Products] - Add product';
+export const ADD_PRODUCT_SUCCESS = '[Products] - Add product success';
+export const ADD_PRODUCT_ERROR = '[Products] - Add product error';
 export const EDIT_PRODUCT = '[Products] - Edit product';
 export const EDIT_PRODUCT_SUCCESS = '[Products] - Edit product success';
 export const EDIT_PRODUCT_ERROR = '[Products] - Edit product error';
@@ -47,6 +49,16 @@ export class AddProduct implements Action {
   constructor(public payload: ProductModel) {}
 }
 
+export class AddProductSuccess implements Action {
+  type = ADD_PRODUCT_SUCCESS;
+  constructor(public payload: ProductModel) {}
+}
+
+export class AddProductError implements Action {
+  type = ADD_PRODUCT_ERROR;
+  constructor(public payload: Error | string) {}
+}
+
 export class EditProduct implements Action {
   type = EDIT_PRODUCT;
   constructor(public payload: ProductModel) {}
@@ -75,6 +87,8 @@ export type ProductsActions =
   | GetProductSuccess
   | GetProductError
   | AddProduct
+  | AddProductSuccess
+  | AddProductError
   | EditProduct
   | EditProductSuccess
   | EditProductError
