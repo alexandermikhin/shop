@@ -56,4 +56,15 @@ export class ProductsEffects {
         .catch(err => new act.AddProductError(err))
     )
   );
+
+  @Effect()
+  deleteProduct$: Observable<Action> = this.actions$.pipe(
+    ofType<act.DeleteProduct>(act.DELETE_PRODUCT),
+    concatMap(action =>
+      this.productsService
+        .deleteProduct(action.payload)
+        .then(() => new act.DeleteProductSuccess(action.payload))
+        .catch(err => new act.DeleteProductError(err))
+    )
+  );
 }

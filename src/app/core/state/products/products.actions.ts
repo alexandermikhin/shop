@@ -14,6 +14,8 @@ export const EDIT_PRODUCT = '[Products] - Edit product';
 export const EDIT_PRODUCT_SUCCESS = '[Products] - Edit product success';
 export const EDIT_PRODUCT_ERROR = '[Products] - Edit product error';
 export const DELETE_PRODUCT = '[Products] - Delete product';
+export const DELETE_PRODUCT_SUCCESS = '[Products] - Delete product success';
+export const DELETE_PRODUCT_ERROR = '[Products] - Delete product error';
 
 export class GetProducts implements Action {
   type = GET_PRODUCTS;
@@ -21,7 +23,7 @@ export class GetProducts implements Action {
 
 export class GetProductsSuccess implements Action {
   type = GET_PRODUCTS_SUCCESS;
-  constructor(public payload: ProductModel[]){}
+  constructor(public payload: ProductModel[]) {}
 }
 
 export class GetProductsError implements Action {
@@ -36,7 +38,7 @@ export class GetProduct implements Action {
 
 export class GetProductSuccess implements Action {
   type = GET_PRODUCT_SUCCESS;
-  constructor(public payload: ProductModel){}
+  constructor(public payload: ProductModel) {}
 }
 
 export class GetProductError implements Action {
@@ -79,6 +81,16 @@ export class DeleteProduct implements Action {
   constructor(public payload: number) {}
 }
 
+export class DeleteProductSuccess implements Action {
+  type = DELETE_PRODUCT_SUCCESS;
+  constructor(public payload: number) {}
+}
+
+export class DeleteProductError implements Action {
+  type = DELETE_PRODUCT_ERROR;
+  constructor(public payload: Error | string) {}
+}
+
 export type ProductsActions =
   | GetProducts
   | GetProductsSuccess
@@ -92,4 +104,6 @@ export type ProductsActions =
   | EditProduct
   | EditProductSuccess
   | EditProductError
-  | DeleteProduct;
+  | DeleteProduct
+  | DeleteProductSuccess
+  | DeleteProductError;

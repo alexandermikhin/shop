@@ -89,9 +89,21 @@ export function productsReducer(
       };
     }
     case act.DELETE_PRODUCT: {
+      return {
+        ...state,
+        editComplete: false
+      };
+    }
+    case act.DELETE_PRODUCT_SUCCESS: {
       const deleteItemId = (action as act.DeleteProduct).payload;
       const data = state.data.filter(item => item.id !== deleteItemId);
-      return { ...state, data };
+      return { ...state, data, editComplete: true };
+    }
+    case act.DELETE_PRODUCT_ERROR: {
+      return {
+        ...state,
+        error: (action as act.DeleteProductError).payload
+      };
     }
     default: {
       return state;

@@ -29,7 +29,7 @@ export class JsonServerClientService {
   }
 
   delete(endpoint: string): Observable<{}> {
-    return this.http.delete<{}>(endpoint);
+    return this.http.delete<{}>(this.url + endpoint);
   }
 
   private getRequestOptions(): { [option: string]: any } {
