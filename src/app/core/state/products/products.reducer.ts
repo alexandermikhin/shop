@@ -15,7 +15,7 @@ export function productsReducer(
       };
     }
     case act.GET_PRODUCTS_SUCCESS: {
-      const data = [...(action as act.GetProductsSuccess).payload];
+      const data = [...action.payload];
       return {
         ...state,
         data,
@@ -28,7 +28,7 @@ export function productsReducer(
         ...state,
         loading: false,
         loaded: false,
-        error: (action as act.GetProductsError).payload
+        error: action.payload
       };
     }
     case act.GET_PRODUCT: {
@@ -43,7 +43,7 @@ export function productsReducer(
         ...state,
         loading: false,
         loaded: true,
-        selectedProduct: (action as act.GetProductSuccess).payload
+        selectedProduct: action.payload
       };
     }
     case act.GET_PRODUCT_ERROR: {
@@ -51,21 +51,21 @@ export function productsReducer(
         ...state,
         loading: false,
         loaded: false,
-        error: (action as act.GetProductError).payload
+        error: action.payload
       };
     }
     case act.ADD_PRODUCT: {
       return { ...state, editComplete: false };
     }
     case act.ADD_PRODUCT_SUCCESS: {
-      const addItem = (action as act.AddProduct).payload;
+      const addItem = action.payload;
       const data = [...state.data, addItem];
       return { ...state, data, editComplete: true };
     }
     case act.ADD_PRODUCT_ERROR: {
       return {
         ...state,
-        error: (action as act.AddProductError).payload
+        error: action.payload
       };
     }
 
@@ -76,7 +76,7 @@ export function productsReducer(
       };
     }
     case act.EDIT_PRODUCT_SUCCESS: {
-      const product = (action as act.EditProductSuccess).payload;
+      const product = action.payload;
       const data = [...state.data];
       const index = data.findIndex(item => item.id === product.id);
       data[index] = product;
@@ -85,7 +85,7 @@ export function productsReducer(
     case act.EDIT_PRODUCT_ERROR: {
       return {
         ...state,
-        error: (action as act.EditProductError).payload
+        error: action.payload
       };
     }
     case act.DELETE_PRODUCT: {
@@ -95,14 +95,14 @@ export function productsReducer(
       };
     }
     case act.DELETE_PRODUCT_SUCCESS: {
-      const deleteItemId = (action as act.DeleteProduct).payload;
+      const deleteItemId = action.payload;
       const data = state.data.filter(item => item.id !== deleteItemId);
       return { ...state, data, editComplete: true };
     }
     case act.DELETE_PRODUCT_ERROR: {
       return {
         ...state,
-        error: (action as act.DeleteProductError).payload
+        error: action.payload
       };
     }
     default: {

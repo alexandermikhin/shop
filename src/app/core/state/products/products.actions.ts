@@ -18,76 +18,76 @@ export const DELETE_PRODUCT_SUCCESS = '[Products] - Delete product success';
 export const DELETE_PRODUCT_ERROR = '[Products] - Delete product error';
 
 export class GetProducts implements Action {
-  type = GET_PRODUCTS;
+  readonly type = GET_PRODUCTS;
 }
 
 export class GetProductsSuccess implements Action {
-  type = GET_PRODUCTS_SUCCESS;
+  readonly type = GET_PRODUCTS_SUCCESS;
   constructor(public payload: ProductModel[]) {}
 }
 
 export class GetProductsError implements Action {
-  type = GET_PRODUCTS_ERROR;
+  readonly type = GET_PRODUCTS_ERROR;
   constructor(public payload: Error | string) {}
 }
 
 export class GetProduct implements Action {
-  type = GET_PRODUCT;
+  readonly type = GET_PRODUCT;
   constructor(public payload: number) {}
 }
 
 export class GetProductSuccess implements Action {
-  type = GET_PRODUCT_SUCCESS;
+  readonly type = GET_PRODUCT_SUCCESS;
   constructor(public payload: ProductModel) {}
 }
 
 export class GetProductError implements Action {
-  type = GET_PRODUCT_ERROR;
+  readonly type = GET_PRODUCT_ERROR;
   constructor(public payload: Error | string) {}
 }
 
 export class AddProduct implements Action {
-  type = ADD_PRODUCT;
+  readonly type = ADD_PRODUCT;
   constructor(public payload: ProductModel) {}
 }
 
 export class AddProductSuccess implements Action {
-  type = ADD_PRODUCT_SUCCESS;
+  readonly type = ADD_PRODUCT_SUCCESS;
   constructor(public payload: ProductModel) {}
 }
 
 export class AddProductError implements Action {
-  type = ADD_PRODUCT_ERROR;
+  readonly type = ADD_PRODUCT_ERROR;
   constructor(public payload: Error | string) {}
 }
 
 export class EditProduct implements Action {
-  type = EDIT_PRODUCT;
+  readonly type = EDIT_PRODUCT;
   constructor(public payload: ProductModel) {}
 }
 
 export class EditProductSuccess implements Action {
-  type = EDIT_PRODUCT_SUCCESS;
+  readonly type = EDIT_PRODUCT_SUCCESS;
   constructor(public payload: ProductModel) {}
 }
 
 export class EditProductError implements Action {
-  type = EDIT_PRODUCT_ERROR;
+  readonly type = EDIT_PRODUCT_ERROR;
   constructor(public payload: Error) {}
 }
 
 export class DeleteProduct implements Action {
-  type = DELETE_PRODUCT;
+  readonly type = DELETE_PRODUCT;
   constructor(public payload: number) {}
 }
 
 export class DeleteProductSuccess implements Action {
-  type = DELETE_PRODUCT_SUCCESS;
+  readonly type = DELETE_PRODUCT_SUCCESS;
   constructor(public payload: number) {}
 }
 
 export class DeleteProductError implements Action {
-  type = DELETE_PRODUCT_ERROR;
+  readonly type = DELETE_PRODUCT_ERROR;
   constructor(public payload: Error | string) {}
 }
 
