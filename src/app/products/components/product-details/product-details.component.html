@@ -23,6 +23,7 @@
       class="btn btn-sm"
       *ngIf="!feedbacksService.isDisplayed"
       (click)="toggleFeedbacks(true)"
+      [disabled]="!product.id"
     >
       Show feedbacks
     </button>

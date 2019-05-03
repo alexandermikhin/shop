@@ -1,5 +1,5 @@
-import { ProductsService } from 'src/app/products/services/products.service';
+import { ProductsState } from './products/products.state';
 
 export interface AppState {
-  products: ProductsService;
+  products: ProductsState;
 }
