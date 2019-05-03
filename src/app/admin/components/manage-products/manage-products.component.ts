@@ -3,6 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AppState } from 'src/app/core/state/app.state';
 import * as act from 'src/app/core/state/products/products.actions';
+import { getProductsState } from 'src/app/core/state/products/products.selectors';
 import { ProductsState } from 'src/app/core/state/products/products.state';
 import { ProductModel } from 'src/app/products/models/product.model';
 
@@ -18,7 +19,7 @@ export class ManageProductsComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.productsState$ = this.store.pipe(select('products'));
+    this.productsState$ = this.store.pipe(select(getProductsState));
     this.sub = this.productsState$.subscribe(state => {
       if (state.editComplete) {
         this.store.dispatch(new act.GetProducts());

@@ -8,6 +8,7 @@ import { CanComponentDeactivate } from 'src/app/core/interfaces/can-component-de
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { AppState } from 'src/app/core/state/app.state';
 import * as act from 'src/app/core/state/products/products.actions';
+import { getProductsState } from 'src/app/core/state/products/products.selectors';
 import { ProductsState } from 'src/app/core/state/products/products.state';
 import { ProductModel } from 'src/app/products/models/product.model';
 
@@ -37,7 +38,7 @@ export class ManageProductComponent
         this.originalProduct = { ...product };
       });
 
-    this.productsState$ = this.store.pipe(select('products'));
+    this.productsState$ = this.store.pipe(select(getProductsState));
     this.sub.add(
       this.productsState$.subscribe(state => {
         if (state.selectedProduct) {
