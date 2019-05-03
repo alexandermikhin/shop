@@ -1,8 +1,11 @@
 <h2>Products list</h2>
-<div *ngIf="(productsState$ | async).loading; else productsList">Loading...</div>
-<div *ngFor="let product of (productsState$ | async).data" #productsList>
-  <app-product [product]="product" (addToCart)="onBuy($event)"
-  (seeDetails)="onSeeDetails($event)"></app-product>
+<div *ngIf="loading$ | async; else productsList">Loading...</div>
+<div *ngFor="let product of products$ | async" #productsList>
+  <app-product
+    [product]="product"
+    (addToCart)="onBuy($event)"
+    (seeDetails)="onSeeDetails($event)"
+  ></app-product>
 </div>
 <div>
   <span>Cart sum: </span

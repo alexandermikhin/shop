@@ -5,8 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { AppState } from 'src/app/core/state/app.state';
 import * as act from 'src/app/core/state/products/products.actions';
-import { getProductsState } from 'src/app/core/state/products/products.selectors';
-import { ProductsState } from 'src/app/core/state/products/products.state';
+import { getProducts, getProductsLoading } from 'src/app/core/state/products/products.selectors';
 import { ProductModel } from '../../models/product.model';
 
 @Component({
@@ -16,7 +15,8 @@ import { ProductModel } from '../../models/product.model';
 export class ProductListComponent implements OnInit, OnDestroy {
   cartSum: number;
   isLoading = true;
-  productsState$: Observable<ProductsState>;
+  products$: Observable<ProductModel[]>;
+  loading$: Observable<boolean>;
 
   private subscription = new Subscription();
 
@@ -30,7 +30,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.cartSum = this.cartService.cartSum;
-    this.productsState$ = this.store.pipe(select(getProductsState));
+    this.products$ = this.store.pipe(select(getProducts));
+    this.loading$ = this.store.pipe(select(getProductsLoading));
     this.store.dispatch(new act.GetProducts());
   }
 

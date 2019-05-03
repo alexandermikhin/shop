@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/core/state/app.state';
 import * as act from 'src/app/core/state/products/products.actions';
-import { getProductsState } from 'src/app/core/state/products/products.selectors';
-import { ProductsState } from 'src/app/core/state/products/products.state';
+import { getSelectedProduct } from 'src/app/core/state/products/products.selectors';
 import { FeedbacksService } from 'src/app/feedbacks/services/feedbacks.service';
 import { ProductModel } from '../../models/product.model';
 
@@ -15,7 +14,6 @@ import { ProductModel } from '../../models/product.model';
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   product: ProductModel;
-  productsState$: Observable<ProductsState>;
 
   private sub: Subscription;
   constructor(
@@ -26,10 +24,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.productsState$ = this.store.pipe(select(getProductsState));
-    this.sub = this.productsState$.subscribe(
-      state => (this.product = state.selectedProduct || new ProductModel())
-    );
+    this.sub = this.store
+      .pipe(select(getSelectedProduct))
+      .subscribe(product => (this.product = product || new ProductModel()));
 
     this.activatedRoute.paramMap.subscribe(params => {
       const id = params.get('productID');

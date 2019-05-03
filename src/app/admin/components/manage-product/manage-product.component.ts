@@ -2,14 +2,16 @@ import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { filter, pluck } from 'rxjs/operators';
 import { CanComponentDeactivate } from 'src/app/core/interfaces/can-component-deactivate.interface';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { AppState } from 'src/app/core/state/app.state';
 import * as act from 'src/app/core/state/products/products.actions';
-import { getProductsState } from 'src/app/core/state/products/products.selectors';
-import { ProductsState } from 'src/app/core/state/products/products.state';
+import {
+  getProductEditComplete,
+  getSelectedProduct
+} from 'src/app/core/state/products/products.selectors';
 import { ProductModel } from 'src/app/products/models/product.model';
 
 @Component({
@@ -21,7 +23,6 @@ export class ManageProductComponent
   product: ProductModel;
   originalProduct: ProductModel;
   private sub: Subscription;
-  private productsState$: Observable<ProductsState>;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,18 +39,25 @@ export class ManageProductComponent
         this.originalProduct = { ...product };
       });
 
-    this.productsState$ = this.store.pipe(select(getProductsState));
     this.sub.add(
-      this.productsState$.subscribe(state => {
-        if (state.selectedProduct) {
-          this.product = { ...state.selectedProduct };
-          this.originalProduct = { ...state.selectedProduct };
-        }
+      this.store
+        .pipe(
+          select(getSelectedProduct),
+          filter(product => !!product)
+        )
+        .subscribe(product => {
+          this.product = { ...product };
+          this.originalProduct = { ...product };
+        })
+    );
 
-        if (state.editComplete) {
-          this.onGoBack();
-        }
-      })
+    this.sub.add(
+      this.store
+        .pipe(
+          select(getProductEditComplete),
+          filter(editComplete => editComplete)
+        )
+        .subscribe(() => this.onGoBack())
     );
   }
 

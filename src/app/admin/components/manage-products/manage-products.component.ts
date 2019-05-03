@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { AppState } from 'src/app/core/state/app.state';
 import * as act from 'src/app/core/state/products/products.actions';
-import { getProductsState } from 'src/app/core/state/products/products.selectors';
-import { ProductsState } from 'src/app/core/state/products/products.state';
+import {
+  getProductEditComplete,
+  getProducts
+} from 'src/app/core/state/products/products.selectors';
 import { ProductModel } from 'src/app/products/models/product.model';
 
 @Component({
@@ -12,19 +15,20 @@ import { ProductModel } from 'src/app/products/models/product.model';
   templateUrl: './manage-products.component.html'
 })
 export class ManageProductsComponent implements OnInit, OnDestroy {
-  productsState$: Observable<ProductsState>;
+  products$: Observable<ProductModel[]>;
 
   private sub: Subscription;
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.productsState$ = this.store.pipe(select(getProductsState));
-    this.sub = this.productsState$.subscribe(state => {
-      if (state.editComplete) {
-        this.store.dispatch(new act.GetProducts());
-      }
-    });
+    this.products$ = this.store.pipe(select(getProducts));
+    this.sub = this.store
+      .pipe(
+        select(getProductEditComplete),
+        filter(editComplete => editComplete)
+      )
+      .subscribe(() => this.store.dispatch(new act.GetProducts()));
 
     this.store.dispatch(new act.GetProducts());
   }
