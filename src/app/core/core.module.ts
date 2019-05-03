@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from 'src/environments/environment';
 import { constantsService } from './models/constants';
 import {
   AppSettings$,
@@ -16,14 +12,10 @@ import { GeneratorService } from './services/generator.service';
 import { JsonServerClientService } from './services/json-server-client.service';
 import { JsonServerApiProvider } from './services/json-server.config';
 import { LocalStorageService } from './services/local-storage.service';
+import { CoreStoreModule } from './state/core-store.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    StoreModule.forRoot({}),
-    EffectsModule.forRoot([]),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
-  ],
+  imports: [CommonModule, CoreStoreModule],
   declarations: [],
   providers: [
     AppSettingsService,
