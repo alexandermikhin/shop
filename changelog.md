@@ -1,5 +1,24 @@
 # Changelog
 
+## Task 7
+* Use ngrx entity for products state.
+* Add get product from url effect and use it on product details component.
+* For products add navigation by actions.
+* Fix. Get productID param only from the primary outlet.
+* Add product selector by url. Use the selector in ProductDetails component.
+* Add router state.
+* Add products state selectors and use them in components.
+* Add products state feature selector.
+* Delete product using store.
+* Add product with state.
+* Go back after product edit on Save button.
+* Edit product with effect and store.
+* Get product from database via effect.
+* Get products from database via effect.
+* Modify state through products reducer.
+* Add ngrx effects module, ngrx store devtools module.
+* Add @ngrx/store package. Add ProductsState, AppState. Use ProductsState in the products list component.
+
 ## Task 6
 * Fix showing of feedbacks for product details.
 * Use AppSettings service to load service either from local storage, server or set default.
