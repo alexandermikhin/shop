@@ -1,5 +1,9 @@
 import * as act from './products.actions';
-import { initialProductsState, ProductsState } from './products.state';
+import {
+  initialProductsState,
+  productsAdapter,
+  ProductsState
+} from './products.state';
 
 export function productsReducer(
   state: ProductsState = initialProductsState,
@@ -16,12 +20,11 @@ export function productsReducer(
     }
     case act.GET_PRODUCTS_SUCCESS: {
       const data = [...action.payload];
-      return {
+      return productsAdapter.addAll(data, {
         ...state,
-        data,
         loading: false,
         loaded: true
-      };
+      });
     }
     case act.GET_PRODUCTS_ERROR: {
       return {
@@ -59,8 +62,7 @@ export function productsReducer(
     }
     case act.ADD_PRODUCT_SUCCESS: {
       const addItem = action.payload;
-      const data = [...state.data, addItem];
-      return { ...state, data, editComplete: true };
+      return productsAdapter.addOne(addItem, { ...state, editComplete: true });
     }
     case act.ADD_PRODUCT_ERROR: {
       return {
@@ -77,10 +79,10 @@ export function productsReducer(
     }
     case act.EDIT_PRODUCT_SUCCESS: {
       const product = action.payload;
-      const data = [...state.data];
-      const index = data.findIndex(item => item.id === product.id);
-      data[index] = product;
-      return { ...state, data, selectedProduct: product, editComplete: true };
+      return productsAdapter.updateOne(
+        { id: product.id, changes: product },
+        { ...state, selectedProduct: product, editComplete: true }
+      );
     }
     case act.EDIT_PRODUCT_ERROR: {
       return {
@@ -96,8 +98,10 @@ export function productsReducer(
     }
     case act.DELETE_PRODUCT_SUCCESS: {
       const deleteItemId = action.payload;
-      const data = state.data.filter(item => item.id !== deleteItemId);
-      return { ...state, data, editComplete: true };
+      return productsAdapter.removeOne(deleteItemId, {
+        ...state,
+        editComplete: true
+      });
     }
     case act.DELETE_PRODUCT_ERROR: {
       return {

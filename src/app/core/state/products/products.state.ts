@@ -1,7 +1,7 @@
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { ProductModel } from 'src/app/products/models/product.model';
 
-export interface ProductsState {
-  data: ProductModel[];
+export interface ProductsState extends EntityState<ProductModel> {
   selectedProduct: ProductModel;
   loading: boolean;
   loaded: boolean;
@@ -9,11 +9,16 @@ export interface ProductsState {
   error: Error | string;
 }
 
-export const initialProductsState: ProductsState = {
-  data: [],
-  selectedProduct: null,
-  loading: false,
-  loaded: false,
-  editComplete: false,
-  error: null
-};
+export const productsAdapter: EntityAdapter<ProductModel> = createEntityAdapter<
+  ProductModel
+>();
+
+export const initialProductsState: ProductsState = productsAdapter.getInitialState(
+  {
+    selectedProduct: null,
+    loading: false,
+    loaded: false,
+    editComplete: false,
+    error: null
+  }
+);

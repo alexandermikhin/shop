@@ -1,16 +1,15 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { ProductModel } from 'src/app/products/models/product.model';
-import { getRouterState } from '../router/router.selectors';
-import { ProductsState } from './products.state';
+import { productsAdapter, ProductsState } from './products.state';
 
 export const getProductsState = createFeatureSelector<ProductsState>(
   'products'
 );
 
-export const getProducts = createSelector(
-  getProductsState,
-  state => state.data
+const { selectAll } = productsAdapter.getSelectors(
+  getProductsState
 );
+
+export const getProducts = selectAll;
 
 export const getSelectedProduct = createSelector(
   getProductsState,
