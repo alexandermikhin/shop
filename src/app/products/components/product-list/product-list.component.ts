@@ -1,11 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { AppState } from 'src/app/core/state/app.state';
 import * as act from 'src/app/core/state/products/products.actions';
-import { getProducts, getProductsLoading } from 'src/app/core/state/products/products.selectors';
+import {
+  getProducts,
+  getProductsLoading
+} from 'src/app/core/state/products/products.selectors';
+import { Go } from 'src/app/core/state/router/router.actions';
 import { ProductModel } from '../../models/product.model';
 
 @Component({
@@ -21,7 +24,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(
-    private router: Router,
     private cartService: CartService,
     private store: Store<AppState>
   ) {
@@ -49,7 +51,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   onSeeDetails(product: ProductModel) {
     const link = ['/product', product.id];
-    this.router.navigate(link);
+    this.store.dispatch(new Go({ path: link }));
   }
 
   private initSubscription() {

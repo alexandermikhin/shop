@@ -1,4 +1,3 @@
-import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
@@ -7,11 +6,12 @@ import { filter, pluck } from 'rxjs/operators';
 import { CanComponentDeactivate } from 'src/app/core/interfaces/can-component-deactivate.interface';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { AppState } from 'src/app/core/state/app.state';
-import * as act from 'src/app/core/state/products/products.actions';
+import * as pa from 'src/app/core/state/products/products.actions';
 import {
   getProductEditComplete,
   getSelectedProduct
 } from 'src/app/core/state/products/products.selectors';
+import * as ra from 'src/app/core/state/router/router.actions';
 import { ProductModel } from 'src/app/products/models/product.model';
 
 @Component({
@@ -26,7 +26,6 @@ export class ManageProductComponent
 
   constructor(
     private route: ActivatedRoute,
-    private location: Location,
     private dialogService: DialogService,
     private store: Store<AppState>
   ) {}
@@ -87,13 +86,13 @@ export class ManageProductComponent
   onSaveProduct() {
     const product = { ...this.product };
     if (product.id) {
-      this.store.dispatch(new act.EditProduct(product));
+      this.store.dispatch(new pa.EditProduct(product));
     } else {
-      this.store.dispatch(new act.AddProduct(product));
+      this.store.dispatch(new pa.AddProduct(product));
     }
   }
 
   onGoBack() {
-    this.location.back();
+    this.store.dispatch(new ra.Back());
   }
 }

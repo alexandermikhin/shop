@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { DialogService } from 'src/app/core/services/dialog.service';
+import { AppState } from 'src/app/core/state/app.state';
+import { Go } from 'src/app/core/state/router/router.actions';
 import { Order } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order-form',
@@ -19,7 +21,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private dialogService: DialogService,
     private orderService: OrderService,
-    private router: Router
+    private store: Store<AppState>
   ) {}
 
   ngOnInit() {
@@ -47,7 +49,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     console.log('Process order');
     this.addOrderSub = this.orderService.addOrder(this.order).subscribe(() => {
       this.cartService.emptyCart();
-      this.router.navigate(['/products-list']);
+      this.store.dispatch(new Go({ path: ['/products-list'] }));
     });
   }
 
@@ -55,7 +57,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     const result = await this.dialogService.confirm('Cancel order?');
     if (result) {
       this.cartService.emptyCart();
-      this.router.navigate(['/products-list']);
+      this.store.dispatch(new Go({ path: ['/products-list'] }));
     }
   }
 }

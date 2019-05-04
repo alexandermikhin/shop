@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
+import { AppState } from 'src/app/core/state/app.state';
+import { Go } from 'src/app/core/state/router/router.actions';
 import { Order } from 'src/app/orders/models/order.model';
 import { OrderService } from 'src/app/orders/services/order.service';
 
 @Injectable()
 export class OrderResolveGuard implements Resolve<Order> {
-  constructor(private orderService: OrderService, private router: Router) {}
+  constructor(
+    private orderService: OrderService,
+    private store: Store<AppState>
+  ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<Order> {
     if (!route.paramMap.has('orderID')) {
@@ -27,12 +33,12 @@ export class OrderResolveGuard implements Resolve<Order> {
           return order;
         }
 
-        this.router.navigate(['/admin/orders']);
+        this.store.dispatch(new Go({ path: ['/admin/orders'] }));
         return null;
       }),
       take(1),
       catchError(() => {
-        this.router.navigate(['/admin/orders']);
+        this.store.dispatch(new Go({ path: ['/admin/orders'] }));
         return of(null);
       })
     );

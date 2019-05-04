@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/core/state/app.state';
 import { getProductByUrl } from 'src/app/core/state/products/products.selectors';
+import { Go } from 'src/app/core/state/router/router.actions';
 import { FeedbacksService } from 'src/app/feedbacks/services/feedbacks.service';
 import { ProductModel } from '../../models/product.model';
 
@@ -16,7 +16,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   private sub: Subscription;
   constructor(
-    private router: Router,
     public feedbacksService: FeedbacksService,
     private store: Store<AppState>
   ) {}
@@ -35,24 +34,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   onGoBack() {
     this.feedbacksService.isDisplayed = false;
-    this.router.navigate(['/products-list']);
+    this.store.dispatch(new Go({ path: ['/products-list'] }));
   }
 
   toggleFeedbacks(display: boolean) {
     this.feedbacksService.activeProductId = this.product.id;
     this.feedbacksService.isDisplayed = display;
-    if (display) {
-      this.router.navigate([
-        '/product',
-        this.product.id,
-        { outlets: { feedback: ['feedback'] } }
-      ]);
-    } else {
-      this.router.navigate([
-        '/product',
-        this.product.id,
-        { outlets: { feedback: null } }
-      ]);
-    }
+    this.store.dispatch(
+      new Go({
+        path: [
+          '/product',
+          this.product.id,
+          { outlets: { feedback: display ? ['feedback'] : null } }
+        ]
+      })
+    );
   }
 }
