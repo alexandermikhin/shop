@@ -31,7 +31,8 @@ export const getProductByUrl = createSelector(
   getProducts,
   getRouterState,
   (products, router): ProductModel => {
-    const taskID = router.state.params.taskID;
-    return taskID ? products.find(p => p.id === +taskID) : new ProductModel();
+    const productId = router.state.params.productID;
+    const product = products.find(p => p.id === +productId);
+    return product || new ProductModel();
   }
 );

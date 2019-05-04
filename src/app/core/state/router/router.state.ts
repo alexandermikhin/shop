@@ -30,8 +30,13 @@ export class CustomSerializer implements RouterStateSerializer<RouterStateUrl> {
     const { url } = routerState;
     const { queryParams } = routerState.root;
     let state: ActivatedRouteSnapshot = routerState.root;
-    while (state.firstChild) {
-      state = state.firstChild;
+    let isPrimaryOutlet = state.outlet === 'primary';
+    while (state.firstChild && isPrimaryOutlet) {
+      const newState = state.firstChild;
+      isPrimaryOutlet = newState.outlet === 'primary';
+      if (isPrimaryOutlet) {
+        state = newState;
+      }
     }
 
     const { params, fragment } = state;
