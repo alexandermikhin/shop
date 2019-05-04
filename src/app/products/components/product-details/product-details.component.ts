@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState } from 'src/app/core/state/app.state';
-import { getProductByUrl } from 'src/app/core/state/products/products.selectors';
+import { GetProductFromUrl } from 'src/app/core/state/products/products.actions';
+import { getSelectedProduct } from 'src/app/core/state/products/products.selectors';
 import { Go } from 'src/app/core/state/router/router.actions';
 import { FeedbacksService } from 'src/app/feedbacks/services/feedbacks.service';
 import { ProductModel } from '../../models/product.model';
@@ -21,8 +22,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.store.dispatch(new GetProductFromUrl());
     this.sub = this.store
-      .pipe(select(getProductByUrl))
+      .pipe(select(getSelectedProduct))
       .subscribe(product => (this.product = product));
   }
 

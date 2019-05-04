@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { concatMap, switchMap } from 'rxjs/operators';
+import { Action, Store } from '@ngrx/store';
+import { EMPTY, Observable, of } from 'rxjs';
+import { concatMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { ProductsService } from 'src/app/products/services/products.service';
+import { AppState } from '../app.state';
+import { getRouterParam } from '../router/router.selectors';
 import * as act from './products.actions';
 
 @Injectable()
 export class ProductsEffects {
   constructor(
     private actions$: Actions,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private store: Store<AppState>
   ) {}
 
   @Effect()
@@ -33,6 +36,19 @@ export class ProductsEffects {
         .then(product => new act.GetProductSuccess(product))
         .catch(err => new act.GetProductError(err))
     )
+  );
+
+  @Effect()
+  getProductFromUrl$: Observable<Action> = this.actions$.pipe(
+    ofType<act.GetProductFromUrl>(act.GET_PRODUCT_FROM_URL),
+    withLatestFrom(this.store.select(getRouterParam('productID'))),
+    switchMap(([_, param]) => {
+      if (param) {
+        return of(new act.GetProduct(+param));
+      }
+
+      return EMPTY;
+    })
   );
 
   @Effect()

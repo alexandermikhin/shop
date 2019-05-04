@@ -26,13 +26,3 @@ export const getProductEditComplete = createSelector(
   getProductsState,
   state => state.editComplete
 );
-
-export const getProductByUrl = createSelector(
-  getProducts,
-  getRouterState,
-  (products, router): ProductModel => {
-    const productId = router.state.params.productID;
-    const product = products.find(p => p.id === +productId);
-    return product || new ProductModel();
-  }
-);

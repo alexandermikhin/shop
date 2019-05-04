@@ -7,6 +7,7 @@ export const GET_PRODUCTS_ERROR = '[Products] - Get products error';
 export const GET_PRODUCT = '[Products] - Get product';
 export const GET_PRODUCT_SUCCESS = '[Products] - Get product success';
 export const GET_PRODUCT_ERROR = '[Products] - Get product error';
+export const GET_PRODUCT_FROM_URL = '[Products] - Get product from url';
 export const ADD_PRODUCT = '[Products] - Add product';
 export const ADD_PRODUCT_SUCCESS = '[Products] - Add product success';
 export const ADD_PRODUCT_ERROR = '[Products] - Add product error';
@@ -44,6 +45,10 @@ export class GetProductSuccess implements Action {
 export class GetProductError implements Action {
   readonly type = GET_PRODUCT_ERROR;
   constructor(public payload: Error | string) {}
+}
+
+export class GetProductFromUrl implements Action {
+  readonly type = GET_PRODUCT_FROM_URL;
 }
 
 export class AddProduct implements Action {
@@ -98,6 +103,7 @@ export type ProductsActions =
   | GetProduct
   | GetProductSuccess
   | GetProductError
+  | GetProductFromUrl
   | AddProduct
   | AddProductSuccess
   | AddProductError
