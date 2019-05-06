@@ -6,7 +6,7 @@ export interface Order {
   date: string;
   name: string;
   phone: string;
-  deliveryDate?: Date;
+  deliveryDate?: string;
   deliveryType: DeliveryType;
   deliveryAddress?: string;
   email?: string;
