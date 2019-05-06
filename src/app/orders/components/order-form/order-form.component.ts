@@ -1,5 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/cart/services/cart.service';
@@ -17,7 +22,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   order: Order;
   totalSum: number;
   orderForm: FormGroup;
-  readonly emailPattern = '[a-z0-9._%+-]+@[a-z0-9.-]+';
+  private readonly emailPattern = '[a-z0-9._%+-]+@[a-z0-9.-]+';
   private addOrderSub: Subscription;
 
   constructor(
@@ -89,12 +94,15 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
   private buildForm() {
     this.orderForm = this.fb.group({
-      name: '',
-      phone: '',
+      name: ['', [Validators.required]],
+      phone: ['', [Validators.required, Validators.maxLength(50)]],
       shouldDeliver: false,
-      deliveryAddress: '',
-      email: '',
-      remark: ''
+      deliveryAddress: ['', [Validators.maxLength(100)]],
+      email: [
+        '',
+        [Validators.maxLength(50), Validators.pattern(this.emailPattern)]
+      ],
+      remark: ['', [Validators.maxLength(1000)]]
     });
   }
 }

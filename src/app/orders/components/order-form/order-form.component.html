@@ -46,7 +46,6 @@
             id="name"
             name="name"
             placeholder="Name"
-            required
             formControlName="name"
           />
           <span class="help-block" *ngIf="controlHasErrors('name')">
@@ -61,8 +60,6 @@
             id="phone"
             name="phone"
             placeholder="Phone"
-            required
-            maxlength="50"
             formControlName="phone"
           />
           <span class="help-block" *ngIf="controlHasErrors('phone')">
@@ -82,8 +79,6 @@
             id="email"
             name="email"
             placeholder="Email"
-            pattern="{{ emailPattern }}"
-            maxlength="50"
             formControlName="email"
           />
           <span class="help-block" *ngIf="controlHasErrors('email')">
@@ -117,7 +112,6 @@
             name="deliveryAddress"
             placeholder="Delivery address"
             required
-            maxlength="100"
             formControlName="deliveryAddress"
           />
           <span class="help-block" *ngIf="controlHasErrors('deliveryAddress')">
@@ -136,7 +130,6 @@
             id="remark"
             name="remark"
             placeholder="Remark"
-            maxlength="1000"
             formControlName="remark"
           >
           </textarea>
