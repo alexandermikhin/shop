@@ -8,9 +8,11 @@ import {
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/cart/services/cart.service';
+import { getIsoDate } from 'src/app/core/helpers/date.helper';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { AppState } from 'src/app/core/state/app.state';
 import { Go } from 'src/app/core/state/router/router.actions';
+import { CustomValidators } from 'src/app/core/validators/custom.validators';
 import { DeliveryType, Order } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
 
@@ -114,16 +116,29 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   }
 
   private buildForm() {
+    const deliveryDate = this.getDeliveryDate();
     this.orderForm = this.fb.group({
       name: ['', [Validators.required]],
       phone: ['', [Validators.required, Validators.maxLength(50)]],
       deliveryType: DeliveryType.byAddress,
       deliveryAddress: '',
+      deliveryDate: [
+        getIsoDate(deliveryDate),
+        [Validators.required, CustomValidators.minDate(deliveryDate)]
+      ],
       email: [
         '',
         [Validators.maxLength(50), Validators.pattern(this.emailPattern)]
       ],
       remark: ['', [Validators.maxLength(1000)]]
     });
+  }
+
+  private getDeliveryDate(): Date {
+    const deliveryDate = new Date();
+    deliveryDate.setDate(deliveryDate.getDate() + 3);
+    deliveryDate.setHours(0, 0, 0, 0);
+
+    return deliveryDate;
   }
 }
