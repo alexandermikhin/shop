@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/cart/services/cart.service';
@@ -7,7 +8,6 @@ import { AppState } from 'src/app/core/state/app.state';
 import { Go } from 'src/app/core/state/router/router.actions';
 import { Order } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
-import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-order-form',
@@ -21,6 +21,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   private addOrderSub: Subscription;
 
   constructor(
+    private fb: FormBuilder,
     private cartService: CartService,
     private dialogService: DialogService,
     private orderService: OrderService,
@@ -39,7 +40,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       phone: ''
     };
 
-    this.createForm();
+    this.buildForm();
     this.totalSum = this.cartService.cartSum;
   }
 
@@ -83,6 +84,17 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       deliveryAddress: new FormControl(),
       email: new FormControl(),
       remark: new FormControl()
+    });
+  }
+
+  private buildForm() {
+    this.orderForm = this.fb.group({
+      name: '',
+      phone: '',
+      shouldDeliver: false,
+      deliveryAddress: '',
+      email: '',
+      remark: ''
     });
   }
 }
