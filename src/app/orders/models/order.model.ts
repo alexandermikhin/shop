@@ -6,8 +6,13 @@ export interface Order {
   date: string;
   name: string;
   phone: string;
-  shouldDeliver?: boolean;
+  deliveryType: DeliveryType;
   deliveryAddress?: string;
   email?: string;
   remark?: string;
+}
+
+export enum DeliveryType {
+  self,
+  byAddress
 }

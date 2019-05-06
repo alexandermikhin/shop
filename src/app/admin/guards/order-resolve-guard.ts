@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
 import { AppState } from 'src/app/core/state/app.state';
 import { Go } from 'src/app/core/state/router/router.actions';
-import { Order } from 'src/app/orders/models/order.model';
+import { DeliveryType, Order } from 'src/app/orders/models/order.model';
 import { OrderService } from 'src/app/orders/services/order.service';
 
 @Injectable()
@@ -22,7 +22,8 @@ export class OrderResolveGuard implements Resolve<Order> {
         cartItems: [],
         date: new Date().toISOString(),
         name: '',
-        phone: ''
+        phone: '',
+        deliveryType: DeliveryType.byAddress
       });
     }
 

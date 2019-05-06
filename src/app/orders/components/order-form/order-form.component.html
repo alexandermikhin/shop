@@ -91,14 +91,29 @@
           </span>
         </div>
         <div class="form-group">
-          <label for="should-deliver">Should deliver</label>
-          <input
-            type="checkbox"
-            class="form-control"
-            id="should-deliver"
-            name="shouldDeliver"
-            formControlName="shouldDeliver"
-          />
+          <label>Delivery type</label>
+          <div class="radio">
+            <label
+              ><input
+                type="radio"
+                name="deliveryType"
+                formControlName="deliveryType"
+                [value]="DeliveryType.byAddress"
+                (change)="onDeliveryTypeChange(DeliveryType.byAddress)"
+              />By address</label
+            >
+          </div>
+          <div class="radio">
+            <label
+              ><input
+                type="radio"
+                name="deliveryType"
+                formControlName="deliveryType"
+                [value]="DeliveryType.self"
+                (change)="onDeliveryTypeChange(DeliveryType.self)"
+              />Self</label
+            >
+          </div>
         </div>
         <div
           class="form-group"
