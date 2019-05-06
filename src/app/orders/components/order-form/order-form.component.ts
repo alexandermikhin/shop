@@ -118,7 +118,10 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   private buildForm() {
     const deliveryDate = this.getDeliveryDate();
     this.orderForm = this.fb.group({
-      name: ['', [Validators.required]],
+      name: new FormControl('', {
+        validators: [Validators.required],
+        updateOn: 'blur'
+      }),
       phone: ['', [Validators.required, Validators.maxLength(50)]],
       deliveryType: DeliveryType.byAddress,
       deliveryAddress: '',
