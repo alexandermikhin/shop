@@ -38,7 +38,7 @@
             </tbody>
           </table>
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="controlIsInvalid('name')">
           <label for="name">Name *</label>
           <input
             type="text"
@@ -49,8 +49,11 @@
             required
             formControlName="name"
           />
+          <span class="help-block" *ngIf="controlHasErrors('name')">
+            Please, enter recipient's name.
+          </span>
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="controlIsInvalid('phone')">
           <label for="phone">Phone *</label>
           <input
             type="tel"
@@ -59,10 +62,19 @@
             name="phone"
             placeholder="Phone"
             required
+            maxlength="50"
             formControlName="phone"
           />
+          <span class="help-block" *ngIf="controlHasErrors('phone')">
+            <span *ngIf="orderForm.get('phone').hasError('required')"
+              >Please, enter contact phone.</span
+            >
+            <span *ngIf="orderForm.get('phone').hasError('maxlength')"
+              >Phone number length cannot exceed 50 symbols.</span
+            ></span
+          >
         </div>
-        <div class="form-group">
+        <div class="form-group" [class.has-error]="controlIsInvalid('email')">
           <label for="email">Email</label>
           <input
             type="email"
@@ -70,9 +82,18 @@
             id="email"
             name="email"
             placeholder="Email"
-            required
+            pattern="{{ emailPattern }}"
+            maxlength="50"
             formControlName="email"
           />
+          <span class="help-block" *ngIf="controlHasErrors('email')">
+            <span *ngIf="orderForm.get('email').hasError('pattern')"
+              >Please enter email in a valid format.</span
+            >
+            <span *ngIf="orderForm.get('email').hasError('maxlength')"
+              >Email address length cannot exceed 50 symbols.</span
+            >
+          </span>
         </div>
         <div class="form-group">
           <label for="should-deliver">Should deliver</label>
@@ -84,7 +105,10 @@
             formControlName="shouldDeliver"
           />
         </div>
-        <div class="form-group">
+        <div
+          class="form-group"
+          [class.has-error]="controlIsInvalid('deliveryAddress')"
+        >
           <label for="delivery-address">Delivery address *</label>
           <input
             type="text"
@@ -93,8 +117,17 @@
             name="deliveryAddress"
             placeholder="Delivery address"
             required
+            maxlength="100"
             formControlName="deliveryAddress"
           />
+          <span class="help-block" *ngIf="controlHasErrors('deliveryAddress')">
+            <span *ngIf="orderForm.get('deliveryAddress').hasError('required')"
+              >Please enter delivery address.</span
+            >
+            <span *ngIf="orderForm.get('deliveryAddress').hasError('maxlength')"
+              >Delivery address length cannot exceed 100 symbols.</span
+            >
+          </span>
         </div>
         <div class="form-group">
           <label for="remark">Remark</label>
@@ -103,9 +136,13 @@
             id="remark"
             name="remark"
             placeholder="Remark"
+            maxlength="1000"
             formControlName="remark"
           >
           </textarea>
+          <span class="help-block" *ngIf="controlHasErrors('remark')">
+            Remark length cannot exceed 1000 symbols.
+          </span>
         </div>
         <div>Total: {{ totalSum }}</div>
         <button

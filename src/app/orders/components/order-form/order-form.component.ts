@@ -17,6 +17,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   order: Order;
   totalSum: number;
   orderForm: FormGroup;
+  readonly emailPattern = '[a-z0-9._%+-]+@[a-z0-9.-]+';
   private addOrderSub: Subscription;
 
   constructor(
@@ -62,6 +63,16 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       this.cartService.emptyCart();
       this.store.dispatch(new Go({ path: ['/products-list'] }));
     }
+  }
+
+  controlIsInvalid(name: string): boolean {
+    const control = this.orderForm.get(name);
+    return (control.touched || control.dirty) && control.invalid;
+  }
+
+  controlHasErrors(name: string): boolean {
+    const control = this.orderForm.get(name);
+    return (control.touched || control.dirty) && !!control.errors;
   }
 
   private createForm() {
