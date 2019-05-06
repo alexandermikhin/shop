@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
+import { getIsoDate } from 'src/app/core/helpers/date.helper';
 import { AppState } from 'src/app/core/state/app.state';
 import { Go } from 'src/app/core/state/router/router.actions';
 import { DeliveryType, Order } from 'src/app/orders/models/order.model';
@@ -20,7 +21,7 @@ export class OrderResolveGuard implements Resolve<Order> {
       return of({
         id: 0,
         cartItems: [],
-        date: new Date().toISOString(),
+        date: getIsoDate(new Date()),
         name: '',
         phone: '',
         deliveryType: DeliveryType.byAddress

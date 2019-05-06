@@ -43,7 +43,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.order = {
       id: 0,
       cartItems,
-      date: new Date().toISOString(),
+      date: getIsoDate(new Date()),
       name: '',
       phone: '',
       deliveryType: DeliveryType.byAddress
