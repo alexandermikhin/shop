@@ -18,11 +18,11 @@ export class OrderResolveGuard implements Resolve<Order> {
   resolve(route: ActivatedRouteSnapshot): Observable<Order> {
     if (!route.paramMap.has('orderID')) {
       return of({
+        id: 0,
         cartItems: [],
         date: new Date().toISOString(),
-        deliveryAddress: '',
-        id: 0,
-        name: ''
+        name: '',
+        phone: ''
       });
     }
 

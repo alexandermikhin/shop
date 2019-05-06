@@ -7,6 +7,7 @@ import { AppState } from 'src/app/core/state/app.state';
 import { Go } from 'src/app/core/state/router/router.actions';
 import { Order } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-order-form',
@@ -15,6 +16,7 @@ import { OrderService } from '../../services/order.service';
 export class OrderFormComponent implements OnInit, OnDestroy {
   order: Order;
   totalSum: number;
+  orderForm: FormGroup;
   private addOrderSub: Subscription;
 
   constructor(
@@ -33,9 +35,10 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       cartItems,
       date: new Date().toISOString(),
       name: '',
-      deliveryAddress: ''
+      phone: ''
     };
 
+    this.createForm();
     this.totalSum = this.cartService.cartSum;
   }
 
@@ -59,5 +62,16 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       this.cartService.emptyCart();
       this.store.dispatch(new Go({ path: ['/products-list'] }));
     }
+  }
+
+  private createForm() {
+    this.orderForm = new FormGroup({
+      name: new FormControl(),
+      phone: new FormControl(),
+      shouldDeliver: new FormControl(),
+      deliveryAddress: new FormControl(),
+      email: new FormControl(),
+      remark: new FormControl()
+    });
   }
 }

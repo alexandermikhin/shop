@@ -5,5 +5,9 @@ export interface Order {
   cartItems: CartItem[];
   date: string;
   name: string;
-  deliveryAddress: string;
+  phone: string;
+  shouldDeliver?: boolean;
+  deliveryAddress?: string;
+  email?: string;
+  remark?: string;
 }

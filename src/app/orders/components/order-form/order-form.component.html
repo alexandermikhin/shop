@@ -1,10 +1,10 @@
-<div *ngIf="order.cartItems.length === 0; else orderForm">
+<div *ngIf="order.cartItems.length === 0; else orderFormTemplate">
   There is nothing to checkout
   <button class="btn" type="button" routerLink="/products-list">
     Back to products
   </button>
 </div>
-<ng-template #orderForm>
+<ng-template #orderFormTemplate>
   <div *ngIf="order.cartItems.length > 0" class="panel panel-default">
     <div class="panel-heading">
       <h4 class="pannel-title">
@@ -12,7 +12,7 @@
       </h4>
     </div>
     <div class="panel-body">
-      <form (ngSubmit)="onProcessOrder()" #form="ngForm">
+      <form (ngSubmit)="onProcessOrder()" [formGroup]="orderForm">
         <div class="form-group">
           <label>Cart items</label>
           <table class="table">
@@ -39,7 +39,7 @@
           </table>
         </div>
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name">Name *</label>
           <input
             type="text"
             class="form-control"
@@ -47,11 +47,45 @@
             name="name"
             placeholder="Name"
             required
-            [(ngModel)]="order.name"
+            formControlName="name"
           />
         </div>
         <div class="form-group">
-          <label for="delivery-address">Delivery address</label>
+          <label for="phone">Phone *</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="phone"
+            name="phone"
+            placeholder="Phone"
+            required
+            formControlName="phone"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+            formControlName="email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="should-deliver">Should deliver</label>
+          <input
+            type="checkbox"
+            class="form-control"
+            id="should-deliver"
+            name="shouldDeliver"
+            formControlName="shouldDeliver"
+          />
+        </div>
+        <div class="form-group">
+          <label for="delivery-address">Delivery address *</label>
           <input
             type="text"
             class="form-control"
@@ -59,11 +93,26 @@
             name="deliveryAddress"
             placeholder="Delivery address"
             required
-            [(ngModel)]="order.deliveryAddress"
+            formControlName="deliveryAddress"
           />
         </div>
+        <div class="form-group">
+          <label for="remark">Remark</label>
+          <textarea
+            class="form-control"
+            id="remark"
+            name="remark"
+            placeholder="Remark"
+            formControlName="remark"
+          >
+          </textarea>
+        </div>
         <div>Total: {{ totalSum }}</div>
-        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="orderForm.invalid"
+        >
           Create order
         </button>
         <button type="button" class="btn btn-warning" (click)="cancelOrder()">
