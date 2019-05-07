@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { JsonServerClientService } from 'src/app/core/services/json-server-client.service';
+import { AppSettings } from 'src/app/core/models/app-settings';
 
 @Injectable()
 export class ValidateAddressService {
   constructor(private jsonServerClient: JsonServerClientService) {}
 
   async validate(address: string): Promise<boolean> {
-    const settings = await this.jsonServerClient
-      .get<string[]>('settings')
+    const settings: AppSettings = await this.jsonServerClient
+      .get<AppSettings>('settings')
       .toPromise()
       .catch(this.handleError);
 
-    const addresses: string[] = settings.addresses;
+    const addresses = settings.addresses;
 
     return addresses.includes(address);
   }
