@@ -7,10 +7,7 @@
       "isAvailable": true,
       "name": "product-1-name",
       "price": "100.12345",
-      "suppliers": [
-        "supplier-1",
-        "supplier-2"
-      ],
+      "suppliers": ["supplier-1", "supplier-2"],
       "updateDate": "2019-05-01T16:17:53.111Z"
     },
     {
@@ -20,10 +17,7 @@
       "isAvailable": true,
       "name": "product-3-name",
       "price": 300,
-      "suppliers": [
-        "supplier-1",
-        "supplier-4"
-      ],
+      "suppliers": ["supplier-1", "supplier-4"],
       "updateDate": "2018-11-30"
     },
     {
@@ -33,10 +27,7 @@
       "isAvailable": true,
       "name": "product-4-name",
       "price": 300.009,
-      "suppliers": [
-        "supplier-1",
-        "supplier-4"
-      ],
+      "suppliers": ["supplier-1", "supplier-4"],
       "updateDate": "2019-04-10"
     },
     {
@@ -125,6 +116,7 @@
     }
   ],
   "settings": {
-    "color": "yellow"
+    "color": "yellow",
+    "addresses": ["address-1", "address-2"]
   }
 }

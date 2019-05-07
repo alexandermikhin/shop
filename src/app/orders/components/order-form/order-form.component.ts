@@ -13,6 +13,7 @@ import { DialogService } from 'src/app/core/services/dialog.service';
 import { AppState } from 'src/app/core/state/app.state';
 import { Go } from 'src/app/core/state/router/router.actions';
 import { CustomValidators } from 'src/app/validators/custom.validators';
+import { ValidateAddressService } from 'src/app/validators/services/validate-address.service';
 import { DeliveryType, Order } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
 
@@ -33,6 +34,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     private cartService: CartService,
     private dialogService: DialogService,
     private orderService: OrderService,
+    private validateAddressService: ValidateAddressService,
     private store: Store<AppState>
   ) {}
 
@@ -50,6 +52,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     };
 
     this.buildForm();
+    this.onDeliveryTypeChange(DeliveryType.byAddress);
     this.totalSum = this.cartService.cartSum;
   }
 
@@ -96,6 +99,9 @@ export class OrderFormComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.maxLength(100)
         ]);
+        deliveryAddressControl.setAsyncValidators([
+          CustomValidators.validAddress(this.validateAddressService)
+        ]);
         break;
       default:
         break;
@@ -124,7 +130,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       }),
       phone: ['', [Validators.required, Validators.maxLength(50)]],
       deliveryType: DeliveryType.byAddress,
-      deliveryAddress: '',
+      deliveryAddress: new FormControl('', { updateOn: 'blur' }),
       deliveryDate: [
         getIsoDate(deliveryDate),
         [Validators.required, CustomValidators.minDate(deliveryDate)]
