@@ -77,6 +77,14 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     );
   }
 
+  onAddPhone() {
+    this.phones.push(this.buildPhoneFormControl());
+  }
+
+  onRemovePhone(index: number) {
+    this.phones.removeAt(index);
+  }
+
   async cancelOrder() {
     const result = await this.dialogService.confirm('Cancel order?');
     if (result) {
@@ -147,7 +155,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         validators: [Validators.required],
         updateOn: 'blur'
       }),
-      phones: this.fb.array([this.getPhoneFormControl()]),
+      phones: this.fb.array([this.buildPhoneFormControl()]),
       deliveryType: DeliveryType.byAddress,
       deliveryAddress: new FormControl('', { updateOn: 'blur' }),
       deliveryDate: [
@@ -180,7 +188,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getPhoneFormControl(): FormControl {
+  private buildPhoneFormControl(): FormControl {
     return new FormControl('', {
       validators: [Validators.required, Validators.maxLength(50)]
     });

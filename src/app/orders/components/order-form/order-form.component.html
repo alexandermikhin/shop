@@ -65,19 +65,42 @@
             class="form-group"
             [class.has-error]="controlIsInvalid(phone)"
           >
-            <input
-              type="tel"
-              class="form-control"
-              name="phone"
-              placeholder="Phone"
-              [formControlName]="i"
-            />
+            <div class="row">
+              <div class="col-md-11">
+                <input
+                  type="tel"
+                  class="form-control"
+                  name="phone"
+                  placeholder="Phone"
+                  [formControlName]="i"
+                />
+              </div>
+              <div class="col-md-1">
+                <button
+                  type="button"
+                  class="btn btn-default btn-sm"
+                  [disabled]="phones.controls.length === 1"
+                  (click)="onRemovePhone(i)"
+                >
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+              </div>
+            </div>
             <ng-container
               *ngTemplateOutlet="
                 errorsTemplate;
                 context: { $implicit: phone, section: 'phone' }
               "
             ></ng-container>
+          </div>
+          <div class="form-group">
+            <button
+              class="btn btn-default btn-sm"
+              type="button"
+              (click)="onAddPhone()"
+            >
+              Add phone
+            </button>
           </div>
         </div>
         <div
