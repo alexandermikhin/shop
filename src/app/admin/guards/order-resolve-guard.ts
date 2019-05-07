@@ -23,7 +23,7 @@ export class OrderResolveGuard implements Resolve<Order> {
         cartItems: [],
         date: getIsoDate(new Date()),
         name: '',
-        phone: '',
+        phones: [],
         deliveryType: DeliveryType.byAddress
       });
     }

@@ -1,11 +1,11 @@
-<div *ngIf="order.cartItems.length === 0; else orderFormTemplate">
+<div *ngIf="cartItems.length === 0; else orderFormTemplate">
   There is nothing to checkout
   <button class="btn" type="button" routerLink="/products-list">
     Back to products
   </button>
 </div>
 <ng-template #orderFormTemplate>
-  <div *ngIf="order.cartItems.length > 0" class="panel panel-default">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="pannel-title">
         Order Form
@@ -25,7 +25,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of order.cartItems">
+              <tr *ngFor="let item of cartItems">
                 <td>{{ item.name }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>{{ item.price | currency: 'BYN':'code':'.2-2' }}</td>

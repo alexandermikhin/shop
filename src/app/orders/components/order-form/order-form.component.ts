@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { CartItem } from 'src/app/cart/models/cart-item.model';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { getIsoDate } from 'src/app/core/helpers/date.helper';
 import { DialogService } from 'src/app/core/services/dialog.service';
@@ -24,7 +25,7 @@ import { OrderService } from '../../services/order.service';
   templateUrl: './order-form.component.html'
 })
 export class OrderFormComponent implements OnInit, OnDestroy {
-  order: Order;
+  cartItems: CartItem[];
   totalSum: number;
   orderForm: FormGroup;
   DeliveryType = DeliveryType;
@@ -41,17 +42,9 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const cartItems = this.cartService
+    this.cartItems = this.cartService
       .getItems()
       .filter(item => item.quantity > 0);
-    this.order = {
-      id: 0,
-      cartItems,
-      date: getIsoDate(new Date()),
-      name: '',
-      phone: '',
-      deliveryType: DeliveryType.byAddress
-    };
 
     this.buildForm();
     this.watchDeliveryTypeChange();
@@ -69,8 +62,21 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
   onProcessOrder() {
     console.log('Process order');
+    const order: Order = {
+      id: 0,
+      cartItems: this.cartItems,
+      date: getIsoDate(new Date()),
+      name: this.orderForm.get('name').value,
+      phones: this.phones.controls.map(c => c.value),
+      deliveryAddress: this.orderForm.get('deliveryAddress').value,
+      deliveryDate: this.orderForm.get('deliveryDate').value,
+      deliveryType: this.orderForm.get('deliveryType').value,
+      email: this.orderForm.get('email').value,
+      remark: this.orderForm.get('remark').value
+    };
+
     this.sub.add(
-      this.orderService.addOrder(this.order).subscribe(() => {
+      this.orderService.addOrder(order).subscribe(() => {
         this.cartService.emptyCart();
         this.store.dispatch(new Go({ path: ['/products-list'] }));
       })
