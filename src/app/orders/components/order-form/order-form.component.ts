@@ -14,6 +14,7 @@ import { AppState } from 'src/app/core/state/app.state';
 import { Go } from 'src/app/core/state/router/router.actions';
 import { CustomValidators } from 'src/app/validators/custom.validators';
 import { ValidateAddressService } from 'src/app/validators/services/validate-address.service';
+import { VALIDATION_MESSAGES } from '../../constants/validation-messages';
 import { DeliveryType, Order } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
 
@@ -87,6 +88,18 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   controlHasErrors(name: string): boolean {
     const control = this.orderForm.get(name);
     return (control.touched || control.dirty) && !!control.errors;
+  }
+
+  getControlErrorMessages(name: string): string[] | undefined {
+    let messages: string[];
+    const control = this.orderForm.get(name);
+    if (control.errors) {
+      messages = Object.keys(control.errors).map(
+        error => VALIDATION_MESSAGES[name][error]
+      );
+    }
+
+    return messages;
   }
 
   private onDeliveryTypeChange(type: DeliveryType) {

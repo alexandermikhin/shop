@@ -48,9 +48,9 @@
             placeholder="Name"
             formControlName="name"
           />
-          <span class="help-block" *ngIf="controlHasErrors('name')">
-            Please, enter recipient's name.
-          </span>
+          <ng-container
+            *ngTemplateOutlet="errorsTemplate; context: { $implicit: 'name' }"
+          ></ng-container>
         </div>
         <div class="form-group" [class.has-error]="controlIsInvalid('phone')">
           <label for="phone">Phone *</label>
@@ -62,14 +62,9 @@
             placeholder="Phone"
             formControlName="phone"
           />
-          <span class="help-block" *ngIf="controlHasErrors('phone')">
-            <span *ngIf="orderForm.get('phone').hasError('required')"
-              >Please, enter contact phone.</span
-            >
-            <span *ngIf="orderForm.get('phone').hasError('maxlength')"
-              >Phone number length cannot exceed 50 symbols.</span
-            ></span
-          >
+          <ng-container
+            *ngTemplateOutlet="errorsTemplate; context: { $implicit: 'phone' }"
+          ></ng-container>
         </div>
         <div class="form-group" [class.has-error]="controlIsInvalid('email')">
           <label for="email">Email</label>
@@ -81,14 +76,9 @@
             placeholder="Email"
             formControlName="email"
           />
-          <span class="help-block" *ngIf="controlHasErrors('email')">
-            <span *ngIf="orderForm.get('email').hasError('pattern')"
-              >Please enter email in a valid format.</span
-            >
-            <span *ngIf="orderForm.get('email').hasError('maxlength')"
-              >Email address length cannot exceed 50 symbols.</span
-            >
-          </span>
+          <ng-container
+            *ngTemplateOutlet="errorsTemplate; context: { $implicit: 'email' }"
+          ></ng-container>
         </div>
         <div
           class="form-group"
@@ -102,11 +92,12 @@
             name="deliveryDate"
             formControlName="deliveryDate"
           />
-          <span class="help-block" *ngIf="controlHasErrors('deliveryDate')">
-            <span *ngIf="orderForm.get('deliveryDate').hasError('minDate')"
-              >Delivery is possible only in 3 days.</span
-            >
-          </span>
+          <ng-container
+            *ngTemplateOutlet="
+              errorsTemplate;
+              context: { $implicit: 'deliveryDate' }
+            "
+          ></ng-container>
         </div>
         <div class="form-group">
           <label>Delivery type</label>
@@ -144,19 +135,12 @@
             placeholder="Delivery address"
             formControlName="deliveryAddress"
           />
-          <span class="help-block" *ngIf="controlHasErrors('deliveryAddress')">
-            <span *ngIf="orderForm.get('deliveryAddress').hasError('required')"
-              >Please enter delivery address.</span
-            >
-            <span *ngIf="orderForm.get('deliveryAddress').hasError('maxlength')"
-              >Delivery address length cannot exceed 100 symbols.</span
-            >
-            <span
-              *ngIf="orderForm.get('deliveryAddress').hasError('validAddress')"
-              >Delivery address should be either 'address-1' or
-              'address-2'.</span
-            >
-          </span>
+          <ng-container
+            *ngTemplateOutlet="
+              errorsTemplate;
+              context: { $implicit: 'deliveryAddress' }
+            "
+          ></ng-container>
         </div>
         <div class="form-group">
           <label for="remark">Remark</label>
@@ -168,9 +152,9 @@
             formControlName="remark"
           >
           </textarea>
-          <span class="help-block" *ngIf="controlHasErrors('remark')">
-            Remark length cannot exceed 1000 symbols.
-          </span>
+          <ng-container
+            *ngTemplateOutlet="errorsTemplate; context: { $implicit: 'remark' }"
+          ></ng-container>
         </div>
         <div>Total: {{ totalSum }}</div>
         <button
@@ -189,4 +173,11 @@
       </form>
     </div>
   </div>
+</ng-template>
+<ng-template #errorsTemplate let-controlName>
+  <span class="help-block" *ngIf="controlHasErrors(controlName)">
+    <span *ngFor="let message of getControlErrorMessages(controlName)">{{
+      message
+    }}</span>
+  </span>
 </ng-template>
