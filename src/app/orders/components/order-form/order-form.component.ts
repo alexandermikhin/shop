@@ -27,7 +27,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   orderForm: FormGroup;
   DeliveryType = DeliveryType;
   private readonly emailPattern = '[a-z0-9._%+-]+@[a-z0-9.-]+';
-  private addOrderSub: Subscription;
+  private sub: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -52,22 +52,23 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     };
 
     this.buildForm();
+    this.watchDeliveryTypeChange();
     this.onDeliveryTypeChange(DeliveryType.byAddress);
     this.totalSum = this.cartService.cartSum;
   }
 
   ngOnDestroy() {
-    if (this.addOrderSub) {
-      this.addOrderSub.unsubscribe();
-    }
+    this.sub.unsubscribe();
   }
 
   onProcessOrder() {
     console.log('Process order');
-    this.addOrderSub = this.orderService.addOrder(this.order).subscribe(() => {
-      this.cartService.emptyCart();
-      this.store.dispatch(new Go({ path: ['/products-list'] }));
-    });
+    this.sub.add(
+      this.orderService.addOrder(this.order).subscribe(() => {
+        this.cartService.emptyCart();
+        this.store.dispatch(new Go({ path: ['/products-list'] }));
+      })
+    );
   }
 
   async cancelOrder() {
@@ -88,7 +89,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     return (control.touched || control.dirty) && !!control.errors;
   }
 
-  onDeliveryTypeChange(type: DeliveryType) {
+  private onDeliveryTypeChange(type: DeliveryType) {
     const deliveryAddressControl = this.orderForm.get('deliveryAddress');
     switch (type) {
       case DeliveryType.self:
@@ -149,5 +150,15 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     deliveryDate.setHours(0, 0, 0, 0);
 
     return deliveryDate;
+  }
+
+  private watchDeliveryTypeChange() {
+    this.sub.add(
+      this.orderForm
+        .get('deliveryType')
+        .valueChanges.subscribe((type: DeliveryType) =>
+          this.onDeliveryTypeChange(type)
+        )
+    );
   }
 }
