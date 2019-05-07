@@ -38,7 +38,10 @@
             </tbody>
           </table>
         </div>
-        <div class="form-group" [class.has-error]="controlIsInvalid('name')">
+        <div
+          class="form-group"
+          [class.has-error]="controlIsInvalid(orderForm.get('name'))"
+        >
           <label for="name">Name *</label>
           <input
             type="text"
@@ -49,24 +52,38 @@
             formControlName="name"
           />
           <ng-container
-            *ngTemplateOutlet="errorsTemplate; context: { $implicit: 'name' }"
+            *ngTemplateOutlet="
+              errorsTemplate;
+              context: { $implicit: orderForm.get('name'), section: 'name' }
+            "
           ></ng-container>
         </div>
-        <div class="form-group" [class.has-error]="controlIsInvalid('phone')">
-          <label for="phone">Phone *</label>
-          <input
-            type="tel"
-            class="form-control"
-            id="phone"
-            name="phone"
-            placeholder="Phone"
-            formControlName="phone"
-          />
-          <ng-container
-            *ngTemplateOutlet="errorsTemplate; context: { $implicit: 'phone' }"
-          ></ng-container>
+        <div formArrayName="phones">
+          <label>Phones *</label>
+          <div
+            *ngFor="let phone of phones.controls; index as i"
+            class="form-group"
+            [class.has-error]="controlIsInvalid(phone)"
+          >
+            <input
+              type="tel"
+              class="form-control"
+              name="phone"
+              placeholder="Phone"
+              [formControlName]="i"
+            />
+            <ng-container
+              *ngTemplateOutlet="
+                errorsTemplate;
+                context: { $implicit: phone, section: 'phone' }
+              "
+            ></ng-container>
+          </div>
         </div>
-        <div class="form-group" [class.has-error]="controlIsInvalid('email')">
+        <div
+          class="form-group"
+          [class.has-error]="controlIsInvalid(orderForm.get('email'))"
+        >
           <label for="email">Email</label>
           <input
             type="email"
@@ -77,12 +94,15 @@
             formControlName="email"
           />
           <ng-container
-            *ngTemplateOutlet="errorsTemplate; context: { $implicit: 'email' }"
+            *ngTemplateOutlet="
+              errorsTemplate;
+              context: { $implicit: orderForm.get('email'), section: 'email' }
+            "
           ></ng-container>
         </div>
         <div
           class="form-group"
-          [class.has-error]="controlIsInvalid('deliveryDate')"
+          [class.has-error]="controlIsInvalid(orderForm.get('deliveryDate'))"
         >
           <label for="delivery-date">Delivery date</label>
           <input
@@ -95,7 +115,10 @@
           <ng-container
             *ngTemplateOutlet="
               errorsTemplate;
-              context: { $implicit: 'deliveryDate' }
+              context: {
+                $implicit: orderForm.get('deliveryDate'),
+                section: 'deliveryDate'
+              }
             "
           ></ng-container>
         </div>
@@ -125,7 +148,7 @@
         <div
           *ngIf="orderForm.get('deliveryType').value === DeliveryType.byAddress"
           class="form-group"
-          [class.has-error]="controlIsInvalid('deliveryAddress')"
+          [class.has-error]="controlIsInvalid(orderForm.get('deliveryAddress'))"
         >
           <label for="delivery-address">Delivery address *</label>
           <input
@@ -139,11 +162,17 @@
           <ng-container
             *ngTemplateOutlet="
               errorsTemplate;
-              context: { $implicit: 'deliveryAddress' }
+              context: {
+                $implicit: orderForm.get('deliveryAddress'),
+                section: 'deliveryAddress'
+              }
             "
           ></ng-container>
         </div>
-        <div class="form-group">
+        <div
+          class="form-group"
+          [class.has-error]="controlIsInvalid(orderForm.get('remark'))"
+        >
           <label for="remark">Remark</label>
           <textarea
             class="form-control"
@@ -154,7 +183,10 @@
           >
           </textarea>
           <ng-container
-            *ngTemplateOutlet="errorsTemplate; context: { $implicit: 'remark' }"
+            *ngTemplateOutlet="
+              errorsTemplate;
+              context: { $implicit: orderForm.get('remark'), section: 'remark' }
+            "
           ></ng-container>
         </div>
         <div>Total: {{ totalSum }}</div>
@@ -175,9 +207,9 @@
     </div>
   </div>
 </ng-template>
-<ng-template #errorsTemplate let-controlName>
-  <span class="help-block" *ngIf="controlHasErrors(controlName)">
-    <span *ngFor="let message of getControlErrorMessages(controlName)">{{
+<ng-template #errorsTemplate let-control let-section="section">
+  <span class="help-block" *ngIf="controlHasErrors(control)">
+    <span *ngFor="let message of getControlErrorMessages(control, section)">{{
       message
     }}</span>
   </span>

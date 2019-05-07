@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -62,6 +63,10 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  get phones(): FormArray {
+    return this.orderForm.get('phones') as FormArray;
+  }
+
   onProcessOrder() {
     console.log('Process order');
     this.sub.add(
@@ -80,22 +85,22 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  controlIsInvalid(name: string): boolean {
-    const control = this.orderForm.get(name);
+  controlIsInvalid(control: FormControl): boolean {
     return (control.touched || control.dirty) && control.invalid;
   }
 
-  controlHasErrors(name: string): boolean {
-    const control = this.orderForm.get(name);
+  controlHasErrors(control: FormControl): boolean {
     return (control.touched || control.dirty) && !!control.errors;
   }
 
-  getControlErrorMessages(name: string): string[] | undefined {
+  getControlErrorMessages(
+    control: FormControl,
+    section: string
+  ): string[] | undefined {
     let messages: string[];
-    const control = this.orderForm.get(name);
     if (control.errors) {
       messages = Object.keys(control.errors).map(
-        error => VALIDATION_MESSAGES[name][error]
+        error => VALIDATION_MESSAGES[section][error]
       );
     }
 
@@ -142,7 +147,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         validators: [Validators.required],
         updateOn: 'blur'
       }),
-      phone: ['', [Validators.required, Validators.maxLength(50)]],
+      phones: this.fb.array([this.getPhoneFormControl()]),
       deliveryType: DeliveryType.byAddress,
       deliveryAddress: new FormControl('', { updateOn: 'blur' }),
       deliveryDate: [
@@ -173,5 +178,11 @@ export class OrderFormComponent implements OnInit, OnDestroy {
           this.onDeliveryTypeChange(type)
         )
     );
+  }
+
+  private getPhoneFormControl(): FormControl {
+    return new FormControl('', {
+      validators: [Validators.required, Validators.maxLength(50)]
+    });
   }
 }
