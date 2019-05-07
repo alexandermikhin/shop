@@ -22,7 +22,8 @@ import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-order-form',
-  templateUrl: './order-form.component.html'
+  templateUrl: './order-form.component.html',
+  styleUrls: ['./order-form.component.css']
 })
 export class OrderFormComponent implements OnInit, OnDestroy {
   cartItems: CartItem[];
