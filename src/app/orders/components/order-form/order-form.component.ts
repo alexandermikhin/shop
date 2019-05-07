@@ -12,7 +12,7 @@ import { getIsoDate } from 'src/app/core/helpers/date.helper';
 import { DialogService } from 'src/app/core/services/dialog.service';
 import { AppState } from 'src/app/core/state/app.state';
 import { Go } from 'src/app/core/state/router/router.actions';
-import { CustomValidators } from 'src/app/core/validators/custom.validators';
+import { CustomValidators } from 'src/app/validators/custom.validators';
 import { DeliveryType, Order } from '../../models/order.model';
 import { OrderService } from '../../services/order.service';
 
