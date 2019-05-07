@@ -123,6 +123,7 @@
           </div>
         </div>
         <div
+          *ngIf="orderForm.get('deliveryType').value === DeliveryType.byAddress"
           class="form-group"
           [class.has-error]="controlIsInvalid('deliveryAddress')"
         >
