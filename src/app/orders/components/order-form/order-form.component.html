@@ -214,19 +214,29 @@
           ></ng-container>
         </div>
         <div>Total: {{ totalSum }}</div>
-        <button
-          type="submit"
-          class="btn btn-primary"
-          [disabled]="orderForm.invalid"
-        >
-          Create order
-        </button>
-        <button type="button" class="btn btn-warning" (click)="cancelOrder()">
-          Cancel order
-        </button>
-        <button class="btn" type="button" routerLink="/cart">
-          Back to cart
-        </button>
+        <div class="app-order-form-operations">
+          <button
+            type="submit"
+            class="btn btn-primary app-order-form-operations__button"
+            [disabled]="orderForm.invalid"
+          >
+            Create order
+          </button>
+          <button
+            type="button"
+            class="btn btn-warning app-order-form-operations__button"
+            (click)="cancelOrder()"
+          >
+            Cancel order
+          </button>
+          <button
+            class="btn app-order-form-operations__button"
+            type="button"
+            routerLink="/cart"
+          >
+            Back to cart
+          </button>
+        </div>
       </form>
     </div>
   </div>
