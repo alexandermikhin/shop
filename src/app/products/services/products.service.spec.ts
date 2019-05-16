@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { JsonServerClientService } from 'src/app/core/services/json-server-client.service';
 import { ProductModel } from '../models/product.model';
 import { ProductsService } from './products.service';
@@ -16,7 +16,7 @@ describe('ProductsService', () => {
   });
 
   it('should return products on getProducts', (done: () => void) => {
-    const products: ProductModel[] = [getProduct()];
+    const products: ProductModel[] = [getProduct(1), getProduct(2)];
 
     jsonServerClient.get.and.returnValue(of(products));
     let result: ProductModel[];
@@ -28,7 +28,7 @@ describe('ProductsService', () => {
   });
 
   it('should return product on getProduct', (done: () => void) => {
-    const product = getProduct();
+    const product = getProduct(1);
 
     jsonServerClient.get.and.returnValue(of(product));
     let result: ProductModel;
@@ -42,14 +42,14 @@ describe('ProductsService', () => {
   it('should add product', (done: () => void) => {
     // @ts-ignore
     spyOn(service, 'getUpdateDate').and.returnValue('2019-05-16');
-    const products = [getProduct()];
+    const products = [getProduct(1), getProduct(3), getProduct(2)];
     const productToAdd: ProductModel = {
-      ...getProduct(),
+      ...getProduct(0),
       name: 'new-product'
     };
     const expectedProductToAdd: ProductModel = {
       ...productToAdd,
-      id: 2,
+      id: 4,
       updateDate: '2019-05-16'
     };
     jsonServerClient.get.and.returnValue(of(products));
@@ -66,7 +66,7 @@ describe('ProductsService', () => {
   it('should edit product', (done: () => void) => {
     // @ts-ignore
     spyOn(service, 'getUpdateDate').and.returnValue('2019-05-16');
-    const productToEdit = getProduct();
+    const productToEdit = getProduct(1);
     const expectedProductToEdit: ProductModel = {
       ...productToEdit,
       updateDate: '2019-05-16'
@@ -89,9 +89,17 @@ describe('ProductsService', () => {
     });
   });
 
-  function getProduct(): ProductModel {
+  it('should handle error if error occurs', (done: () => void) => {
+    jsonServerClient.get.and.returnValue(throwError('error'));
+    service.getProducts().catch((error) => {
+      expect(error).toEqual('error');
+      done();
+    });
+  });
+
+  function getProduct(id: number): ProductModel {
     return {
-      id: 1,
+      id,
       category: 'product-category',
       description: 'product-description',
       isAvailable: true,
