@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -19,8 +20,8 @@ describe('AppComponent', () => {
   it(`should have as title 'shop'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const app: AppComponent = fixture.debugElement.componentInstance;
-    const heading: HTMLHeadingElement = app.title.nativeElement;
+    const debugElement = fixture.debugElement.query(By.css('.navbar-brand'));
+    const heading: HTMLLinkElement = debugElement.nativeElement;
     expect(heading.innerText).toEqual('Shop application');
   });
 
