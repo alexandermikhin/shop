@@ -1,5 +1,15 @@
 # Changelog
 
+## Task 9
+* Add coverage report screenshot.
+* Fix tests with missing import.
+* Add tests to AppComponent.
+* Add tests for order by pipe.
+* Add handle error test for products service tests.
+* Add tests for products service.
+* Add tests for product component.
+* Fix tests build issues.
+
 ## Task 8
 * Add spacing between buttons.
 * Add styles to order form.
