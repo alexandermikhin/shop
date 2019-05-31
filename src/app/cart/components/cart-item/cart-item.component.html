@@ -1,0 +1,20 @@
+<div *ngIf="item" class="panel panel-default">
+  <div class="panel-heading">{{ item.name | titlecase }}</div>
+  <div class="panel-body">
+    <ul>
+      <li>Price: {{ item.price | currency: 'BYN':'code':'.2-2' }}</li>
+      <li>
+        Quantity:
+        <button class="btn btn-sm" (click)="changeQuantity(-1)">-</button>
+        {{ item.quantity }}
+        <button class="btn btn-sm" (click)="changeQuantity(1)">+</button>
+      </li>
+      <li>
+        Sum: {{ item.quantity * item.price | currency: 'BYN':'code':'.2-2' }}
+      </li>
+    </ul>
+    <button class="btn btn-sm btn-warning" (click)="removeItem(item)">
+      Remove
+    </button>
+  </div>
+</div>

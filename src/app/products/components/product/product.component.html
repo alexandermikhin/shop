@@ -1,0 +1,25 @@
+<div *ngIf="product" class="panel panel-default">
+  <div class="panel-heading">{{ product.name | titlecase }}</div>
+  <div class="panel-body">
+    <ul>
+      <li>Description: {{ product.description }}</li>
+      <li>Category: {{ product.category | uppercase }}</li>
+      <li>Available: {{ product.isAvailable }}</li>
+      <li>Price: {{ product.price | currency: 'BYN':'code':'.2-2' }}</li>
+      <li>Update date: {{ product.updateDate | date: 'dd.MM.yyyy' }}</li>
+    </ul>
+    <button
+      class="btn btn-primary btn-sm"
+      (click)="onAddToCart()"
+      [disabled]="!product.isAvailable"
+    >
+      Add to cart
+    </button>
+    <button
+      class="btn btn-sm"
+      (click)="onSeeDetails()"
+    >
+      See details
+    </button>
+  </div>
+</div>

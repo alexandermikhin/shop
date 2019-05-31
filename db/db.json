@@ -1,0 +1,155 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "category": "category-1",
+      "description": "product-1-description",
+      "isAvailable": true,
+      "name": "product-1-name",
+      "price": "100.12345",
+      "suppliers": [
+        "supplier-1",
+        "supplier-2"
+      ],
+      "updateDate": "2019-05-01T16:17:53.111Z"
+    },
+    {
+      "id": 3,
+      "category": "category-3",
+      "description": "product-3-description",
+      "isAvailable": true,
+      "name": "product-3-name",
+      "price": 300,
+      "suppliers": [
+        "supplier-1",
+        "supplier-4"
+      ],
+      "updateDate": "2018-11-30"
+    },
+    {
+      "id": 4,
+      "category": "category-3",
+      "description": "product-4-description",
+      "isAvailable": true,
+      "name": "product-4-name",
+      "price": 300.009,
+      "suppliers": [
+        "supplier-1",
+        "supplier-4"
+      ],
+      "updateDate": "2019-04-10"
+    },
+    {
+      "name": "222-new-2",
+      "price": "100.123",
+      "description": "product-1-description",
+      "category": "category-1",
+      "id": 6,
+      "updateDate": "2019-04-24T14:49:19.345Z",
+      "isAvailable": true
+    },
+    {
+      "name": "2223",
+      "price": "100.123",
+      "description": "product-1-description",
+      "category": "category-1",
+      "isAvailable": true,
+      "id": 7,
+      "updateDate": "2019-04-24T14:48:14.444Z"
+    },
+    {
+      "name": "333",
+      "price": "333",
+      "description": "333",
+      "category": "333",
+      "isAvailable": true,
+      "id": 8,
+      "updateDate": "2019-04-25T02:40:37.786Z"
+    },
+    {
+      "name": "555product-1-name",
+      "price": "100.123555",
+      "description": "product-1-description",
+      "category": "333",
+      "isAvailable": true,
+      "id": 9,
+      "updateDate": "2019-05-01T16:37:26.215Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": 2,
+      "cartItems": [],
+      "date": "2019-04-06",
+      "name": "Name-1",
+      "deliveryAddress": "address 22"
+    },
+    {
+      "id": 3,
+      "cartItems": [
+        {
+          "name": "product-1-name",
+          "price": "100.1234",
+          "quantity": 1
+        }
+      ],
+      "date": "2019-04-25T06:58:05.725Z",
+      "name": "111222",
+      "deliveryAddress": "111"
+    },
+    {
+      "id": 4,
+      "cartItems": [
+        {
+          "name": "product-1-name",
+          "price": "100.1234",
+          "quantity": 1
+        }
+      ],
+      "date": "2019-04-25T07:00:05.280Z",
+      "name": "222",
+      "deliveryAddress": "222"
+    },
+    {
+      "id": 5,
+      "cartItems": [
+        {
+          "name": "product-1-name",
+          "price": "100.1234",
+          "quantity": 1
+        }
+      ],
+      "date": "2019-04-25T07:00:33.943Z",
+      "name": "111",
+      "deliveryAddress": "222333"
+    },
+    {
+      "id": 6,
+      "cartItems": [
+        {
+          "name": "product-1-name",
+          "price": "100.12345",
+          "quantity": 2
+        }
+      ],
+      "date": "2019-05-07",
+      "name": "aaa",
+      "phones": [
+        "222",
+        "444"
+      ],
+      "deliveryAddress": "address-2",
+      "deliveryDate": "2019-05-10",
+      "deliveryType": 1,
+      "email": "ffff@f",
+      "remark": "Remark"
+    }
+  ],
+  "settings": {
+    "color": "yellow",
+    "addresses": [
+      "address-1",
+      "address-2"
+    ]
+  }
+}

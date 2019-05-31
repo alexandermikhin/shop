@@ -1,0 +1,37 @@
+<button class="btn btn-primary" routerLink="/admin/product/add">
+  Add product
+</button>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Available</th>
+      <th>Last edited</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products$ | async">
+      <td>{{ product.name }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.description }}</td>
+      <td>{{ product.category }}</td>
+      <td>{{ product.isAvailable }}</td>
+      <td>{{ product.updateDate | date: 'short' }}</td>
+      <td>
+        <button
+          class="btn btn-sm"
+          [routerLink]="['../product/edit', product.id]"
+        >
+          Edit
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="onDelete(product)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

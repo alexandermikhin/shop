@@ -1,0 +1,17 @@
+<div class="row">
+  <h4 class="col-md-10">Feedbacks</h4>
+</div>
+<div>
+  <textarea [(ngModel)]="feedback"></textarea>
+</div>
+<div>
+  <button type="button" class="btn btn-primary" (click)="onSend()">Send</button>
+</div>
+<div
+  *ngFor="
+    let message of feedbacksService.getAll(feedbacksService.activeProductId)
+  "
+  class="message-row"
+>
+  {{ message }}
+</div>

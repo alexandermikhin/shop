@@ -1,0 +1,16 @@
+<h2>Products list</h2>
+<div *ngIf="loading$ | async; else productsList">Loading...</div>
+<div *ngFor="let product of products$ | async" #productsList>
+  <app-product
+    [product]="product"
+    (addToCart)="onBuy($event)"
+    (seeDetails)="onSeeDetails($event)"
+  ></app-product>
+</div>
+<div>
+  <span>Cart sum: </span
+  ><span>{{ cartSum | currency: 'BYN':'code':'.2-2' }}</span>
+</div>
+<div>
+  <a href="javascript:void(0)" routerLink="/cart">Go to cart</a>
+</div>

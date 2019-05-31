@@ -1,0 +1,16 @@
+.required label:after {
+  content: ' *';
+  color: red
+}
+
+.app-order-form__remark {
+  resize: none;
+}
+
+.app-order-form-operations__button {
+  margin-right: 5px;
+}
+
+.app-order-form-operations__button:last-child {
+  margin-right: initial;
+}
